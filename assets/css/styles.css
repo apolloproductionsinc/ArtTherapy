@@ -11,7 +11,8 @@
   --ink-3:   #6b6b6b;   /* small meta, 5.3:1 */
   --mute:    #949494;   /* inactive LARGE type only, 3.0:1 */
   --rule:    #e6e6e6;
-  --red:     #ff4a1c;   /* the slash, carried over from the first design */
+  --red:     #ff4a1c;
+  --blot:    #e9e7e3;   /* pale stone inkblot behind the intro wordmark */   /* the slash, carried over from the first design */
   --stone-1: #f3f2f0;
   --stone-2: #e4e2de;
   --blue-1:  #e8ebed;
@@ -165,7 +166,15 @@ main { display: block; }
   display: grid; place-items: center;
   padding: 0 var(--gutter);
 }
+.intro__blot {
+  position: absolute; inset: 0; z-index: 0;
+  display: grid; place-items: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+.intro__blot svg { width: min(94vw, 1180px); height: auto; color: var(--blot); }
 .mark {
+  position: relative; z-index: 1;
   display: flex; justify-content: center; align-items: baseline;
   width: 100%;
   font-size: clamp(3.25rem, 11vw, 10.5rem);
@@ -185,6 +194,7 @@ main { display: block; }
 .js .mark.is-open .mark__slash { padding-inline: 0.28em; }
 
 .intro__arrow {
+  z-index: 1;
   position: absolute; left: 50%; bottom: clamp(24px, 6vh, 64px);
   transform: translateX(-50%);
   display: grid; justify-items: center; gap: 10px;

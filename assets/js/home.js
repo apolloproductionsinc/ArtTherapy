@@ -1,6 +1,7 @@
 /* art / therapy — landing page
- * 1. Intro: "a/t" holds for a second, then "art" and "therapy" open
- *    outward from the slash, then a down arrow invites the scroll.
+ * 1. Intro: "a/t" holds for a second over a still Rorschach blot, then
+ *    "art" and "therapy" open outward from the slash, the blot starts
+ *    moving, and a down arrow invites the scroll.
  * 2. Capabilities list: hover / focus / tap highlights a capability,
  *    shows its line of copy and swaps the still beside it.
  */
@@ -42,6 +43,13 @@
     var arrow = document.querySelector(".intro__arrow");
     if (!mark) return;
     var grows = Array.prototype.slice.call(mark.querySelectorAll(".mark__grow"));
+    // inkblot: drawn still now, set moving when the words spread apart
+    var blotSvg = document.querySelector(".intro__blot svg");
+    var blot = blotSvg && AT.makeBlot ? AT.makeBlot(blotSvg, {
+      seed: parseInt(blotSvg.getAttribute("data-blot"), 10) || 7,
+      count: parseInt(blotSvg.getAttribute("data-count"), 10) || 24
+    }) : null;
+    var startBlot = function () { if (blot) blot.start(); };
 
     function finish() {
       body.classList.remove("is-intro");
@@ -54,6 +62,7 @@
     if (cameFromSite()) {
       mark.classList.add("is-open");
       finish();
+      startBlot();
       frameStatement();
       return;
     }
@@ -62,6 +71,7 @@
     if (AT.reduceMotion.matches || window.scrollY > 40) {
       mark.classList.add("is-open");
       finish();
+      startBlot();
       return;
     }
 
@@ -72,6 +82,7 @@
         requestAnimationFrame(function () {
           grows.forEach(function (g) { g.style.width = g.scrollWidth + "px"; });
           mark.classList.add("is-open");
+          startBlot();
         });
         window.setTimeout(function () {
           mark.classList.remove("is-animating");
@@ -85,7 +96,7 @@
 
     // let people skip straight past the intro
     window.addEventListener("scroll", function onS() {
-      if (window.scrollY > 40) { window.removeEventListener("scroll", onS); mark.classList.add("is-open"); finish(); }
+      if (window.scrollY > 40) { window.removeEventListener("scroll", onS); mark.classList.add("is-open"); finish(); startBlot(); }
     }, { passive: true });
   }
 
