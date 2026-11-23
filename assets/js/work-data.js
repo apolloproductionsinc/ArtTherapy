@@ -13,8 +13,8 @@
  *   id          unique slug
  *   kicker      short client / artist label (from the planning doc)
  *   title       title as listed on the source site
- *   categories  any of: music, docs, commercial, case-studies,
- *               experiential, livestream
+ *   categories  any of: commercial, documentary, live,
+ *               experiential, music
  *   aspect      "16/9" | "1/1" | "9/16" | "4/5" …
  *   source      { name, by, url }   shown as "watch on <name>"
  *   embed       { type: "youtube"|"vimeo"|"vimeo-showcase"|"tiktok", … }
@@ -66,7 +66,7 @@ window.AT_WORK = [
     id: "lexus-audrey-nuna",
     kicker: "Lexus — Audrey Nuna",
     title: "Audrey Nuna Live at 88rising Double Happiness (Changes, Baby Blues) — Presented by Lexus",
-    categories: ["livestream", "music", "commercial"],
+    categories: ["live", "music", "commercial"],
     aspect: "16/9",
     source: { name: "YouTube", by: "88rising", url: "https://youtu.be/V39pL_Zzul4?t=14" },
     embed: { type: "youtube", id: "V39pL_Zzul4", start: 14 },
@@ -76,7 +76,7 @@ window.AT_WORK = [
     id: "nona-doc",
     kicker: "Nona",
     title: "Nona — documentary",
-    categories: ["docs"],
+    categories: ["documentary"],
     aspect: "16/9",
     source: null,
     placeholder: true,
@@ -130,7 +130,7 @@ window.AT_WORK = [
     id: "asia-rising",
     kicker: "88rising — documentary",
     title: "Asia Rising",
-    categories: ["docs", "case-studies"],
+    categories: ["documentary"],
     aspect: "16/9",
     source: { name: "Red Bull TV", by: "Red Bull", url: "https://www.redbull.tv/en/page/page:rrn:content:films:f7e4ecf5-6329-5859-b30b-48c5ae6f61f8/asia-rising-1" },
     thumb: "https://img.redbull.com/images/c_limit,w_1500,h_1000/f_auto,q_auto/redbullcom/tv/FO-1YSGJEEGW5N11/FO-1YSGJEEGW5N11-featureMedia",
@@ -160,7 +160,7 @@ window.AT_WORK = [
     id: "hitc-katseye",
     kicker: "Head In The Clouds — live festival",
     title: "Katseye Head In The Clouds Festival 2026",
-    categories: ["livestream", "experiential", "music"],
+    categories: ["live", "experiential", "music"],
     aspect: "16/9",
     source: { name: "YouTube", by: "masymusica", url: "https://youtu.be/fH-tHySA0g8?t=83" },
     embed: { type: "youtube", id: "fH-tHySA0g8", start: 83 },
@@ -171,7 +171,7 @@ window.AT_WORK = [
     id: "snowglobe",
     kicker: "SnowGlobe \u2014 live festival",
     title: "SNOWGLOBE",
-    categories: ["livestream", "experiential", "music"],
+    categories: ["live", "experiential", "music"],
     aspect: "16/9",
     source: null,
     placeholder: true,
@@ -182,7 +182,7 @@ window.AT_WORK = [
     id: "tiktok-shop-speed-omalley",
     kicker: "TikTok Shop",
     title: "iShowSpeed & Sean O\u2019Malley",
-    categories: ["livestream"],
+    categories: ["live"],
     aspect: "9/16",
     source: { name: "TikTok", by: "@sportscenternext", url: "https://www.tiktok.com/@sportscenternext/video/7579046961634970910" },
     embed: { type: "tiktok", id: "7579046961634970910" },
@@ -194,7 +194,7 @@ window.AT_WORK = [
     id: "kanye-drake-larry-hoover",
     kicker: "Kanye & Drake — live",
     title: "KANYE & DRAKE - FREE LARRY HOOVER CONCERT",
-    categories: ["livestream", "experiential", "music"],
+    categories: ["live", "experiential", "music"],
     aspect: "16/9",
     source: { name: "YouTube", by: "2infinity", url: "https://youtu.be/JV_mGICwVtk?t=1851" },
     embed: { type: "youtube", id: "JV_mGICwVtk", start: 1851 },
@@ -203,33 +203,32 @@ window.AT_WORK = [
   },
   {
     id: "controlled-insanity",
-    kicker: "Controlled Insanity \u2014 case study",
+    kicker: "Controlled Insanity",
     title: "CONTROLLED INSANITY \u201CYOUR WORST ENEMY\u201D",
-    categories: ["case-studies", "commercial"],
+    categories: ["commercial"],
     aspect: "16/9",
     source: { name: "Vimeo", by: "Steve Conry", url: "https://vimeo.com/1108258952/9a315218f2" },
     embed: { type: "vimeo", id: "1108258952", hash: "9a315218f2" },
     thumb: "https://i.vimeocdn.com/video/2045468614-5a848a1e8762c1b0fb6d25c3bf41bc3829735c8601f61e5aa12fa5df2f601770-d_1280?region=us",
-    note: "TEMP: fills a case-study slot. Planning doc lists Controlled Insanity as a hero case study (\u201CSteve growing the company\u201D). Name per steveconry.com/controlled-insanity. Case-study write-up pending."
+    note: "Planning doc lists Controlled Insanity as a hero case study (\u201CSteve growing the company\u201D). Name per steveconry.com/controlled-insanity. Case-study write-up pending."
   },
   {
     id: "electric-forest-time",
-    kicker: "Electric Forest \u2014 case study",
+    kicker: "Electric Forest",
     title: "ELECTRIC FOREST \u201CTIME\u201D",
-    categories: ["case-studies", "experiential", "docs"],
+    categories: ["experiential", "documentary"],
     aspect: "2.39/1",
     source: { name: "Vimeo", by: "Steve Conry", url: "https://vimeo.com/243180661" },
     embed: { type: "vimeo", id: "243180661" },
     thumb: "https://i.vimeocdn.com/video/667313439-fdd411d9af2d5ba815db1a38768fd6037932076b5af52d1eebfce8e65490696f-d_1280?region=us",
-    note: "TEMP: fills a case-study slot. Planning doc lists E Forest as a hero case study. Name per steveconry.com/time (Vimeo title: \u201CONCE UPON THE FOREST: TIME\u201D). Case-study write-up pending."
+    note: "Planning doc lists E Forest as a hero case study. Name per steveconry.com/time (Vimeo title: \u201CONCE UPON THE FOREST: TIME\u201D). Case-study write-up pending."
   }
 ];
 
 window.AT_CATEGORIES = [
-  { id: "music", label: "music" },
-  { id: "docs", label: "docs" },
   { id: "commercial", label: "commercial" },
-  { id: "case-studies", label: "case studies" },
+  { id: "documentary", label: "documentary" },
+  { id: "live", label: "live" },
   { id: "experiential", label: "experiential" },
-  { id: "livestream", label: "livestream" }
+  { id: "music", label: "music" }
 ];
