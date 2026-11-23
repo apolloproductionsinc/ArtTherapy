@@ -46,7 +46,7 @@ Layout widths are worked out automatically from the order of the visible items. 
 
 ### Filters and navigation
 
-The header links Music, Docs, Commercial, Case Studies, Experiential and Livestream use the same filter as the bar above the work list. Filters can be deep-linked, for example `/#work/music` or `/#work/livestream`. **all work** resets the filter.
+The header links Music, Docs, Commercial, Case Studies, Experiential and Livestream use the same filter as the bar above the work list. Filters can be deep-linked, for example `/#work-music` or `/#work-livestream`. **all work** resets the filter.
 
 ## Landing-page content source
 

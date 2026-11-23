@@ -1,7 +1,8 @@
 /* art / therapy — interactions
  * - builds the work list + filters from work-data.js
  * - lightweight video facades (iframes load only on click)
- * - hash-based filters (#work/music …) shared by header nav + filter bar
+ * - hash-based filters (#work-music …) shared by header nav + filter bar
+ *   (plain #name hashes so links also survive hosts that strip paths)
  * - restrained scroll reveals, honours prefers-reduced-motion
  */
 (function () {
@@ -114,7 +115,8 @@
     var media = el("div", { class: "work-item__media", style: "--ar:" + (item.aspect || "16/9").replace("/", " / ") });
     var facade;
 
-    if (item.embed) {
+    // Preview builds on hosts that block iframes (window.AT_LINK_OUT) link out instead.
+    if (item.embed && !window.AT_LINK_OUT) {
       facade = el("button", {
         type: "button",
         class: "work-item__play",
@@ -235,8 +237,10 @@
     stopPlaying();
 
     if (opts.updateHash) {
-      var hash = id === "all" ? "#work" : "#work/" + id;
-      if (location.hash !== hash) history.pushState(null, "", hash);
+      var hash = id === "all" ? "#work" : "#work-" + id;
+      if (location.hash !== hash) {
+        try { history.pushState(null, "", hash); } catch (e) { /* sandboxed hosts */ }
+      }
     }
 
     var doScroll = function () {
@@ -261,8 +265,10 @@
   }
 
   function filterFromHash() {
-    var m = /^#work(?:\/([\w-]+))?$/.exec(location.hash);
-    return m ? (m[1] || "all") : null;
+    var m = /^#work(?:-([a-z-]+))?$/.exec(location.hash);
+    if (!m) return null;
+    if (!m[1]) return "all";
+    return CATS.some(function (c) { return c.id === m[1]; }) ? m[1] : null;
   }
 
   /* ---------------- reveals ---------------- */
@@ -311,7 +317,7 @@
     });
     mq.addEventListener("change", function () { if (!mq.matches) setOpen(false); });
 
-    // header filter links: #work/<category>
+    // header filter links: #work-<category>
     $$("[data-filter-link]").forEach(function (a) {
       a.addEventListener("click", function (e) {
         e.preventDefault();
