@@ -21,6 +21,7 @@
  *               omit for link-only or placeholder entries
  *   thumb       poster image URL (null → mineral placeholder)
  *   placeholder true when the asset still has to be supplied
+ *   tempStill   true when the poster is a temporary frame grab
  *   note        internal pre-launch note (never rendered)
  *
  * IMPORTANT: posters are hot-linked from the hosting platforms for
@@ -54,11 +55,12 @@ window.AT_WORK = [
     kicker: "Rhode",
     title: "RHODE",
     categories: ["commercial"],
-    aspect: "16/9",
+    aspect: "4/3",
     source: null,
     placeholder: true,
-    tone: "chalk",
-    note: "Only link in the doc is a private Dropbox master (.mov). Needs a public Vimeo/YouTube upload or approved stills before it can be embedded."
+    tempStill: true,
+    thumb: "assets/img/temp/rhode-temp.jpg",
+    note: "TEMP STILL: frame grab (0:12) from the Dropbox master \u201C261102_Rhode_Side_Assistance_Master.mov\u201D. The video itself is still private: needs a public Vimeo/YouTube upload before it can be embedded, plus approved stills."
   },
   {
     id: "lexus-audrey-nuna",
@@ -179,14 +181,14 @@ window.AT_WORK = [
   {
     id: "tiktok-shop-speed-omalley",
     kicker: "TikTok Shop",
-    title: "iShowSpeed & Sean O’Malley",
+    title: "iShowSpeed & Sean O\u2019Malley",
     categories: ["livestream"],
     aspect: "9/16",
     source: { name: "TikTok", by: "@sportscenternext", url: "https://www.tiktok.com/@sportscenternext/video/7579046961634970910" },
     embed: { type: "tiktok", id: "7579046961634970910" },
-    thumb: null,
-    tone: "blue",
-    note: "TikTok does not expose a usable poster; supply a still."
+    tempStill: true,
+    thumb: "assets/img/temp/tiktok-speed-omalley-temp.jpg",
+    note: "TEMP STILL: frame grab (0:05) from the TikTok player, includes the uploader's burned-in caption. Replace with a clean still."
   },
   {
     id: "kanye-drake-larry-hoover",
@@ -200,26 +202,26 @@ window.AT_WORK = [
     note: "Full YouTube title: “KANYE & DRAKE - FREE LARRY HOOVER CONCERT (FULL CONCERT) [WITH TIMESTAMPS]” — uploader suffix trimmed. Third-party upload; swap for an official source."
   },
   {
-    id: "case-study-placeholder-01",
-    kicker: "Case study",
-    title: "Case study — forthcoming",
-    categories: ["case-studies"],
+    id: "controlled-insanity",
+    kicker: "Controlled Insanity \u2014 case study",
+    title: "CONTROLLED INSANITY \u201CYOUR WORST ENEMY\u201D",
+    categories: ["case-studies", "commercial"],
     aspect: "16/9",
-    source: null,
-    placeholder: true,
-    tone: "stone",
-    note: "Placeholder. Doc candidates: Yonex 2026/2027, Controlled Insanity, 88rising, Electric Forest."
+    source: { name: "Vimeo", by: "Steve Conry", url: "https://vimeo.com/1108258952/9a315218f2" },
+    embed: { type: "vimeo", id: "1108258952", hash: "9a315218f2" },
+    thumb: "https://i.vimeocdn.com/video/2045468614-5a848a1e8762c1b0fb6d25c3bf41bc3829735c8601f61e5aa12fa5df2f601770-d_1280?region=us",
+    note: "TEMP: fills a case-study slot. Planning doc lists Controlled Insanity as a hero case study (\u201CSteve growing the company\u201D). Name per steveconry.com/controlled-insanity. Case-study write-up pending."
   },
   {
-    id: "case-study-placeholder-02",
-    kicker: "Case study",
-    title: "Case study — forthcoming",
-    categories: ["case-studies"],
-    aspect: "16/9",
-    source: null,
-    placeholder: true,
-    tone: "chalk",
-    note: "Placeholder."
+    id: "electric-forest-time",
+    kicker: "Electric Forest \u2014 case study",
+    title: "ELECTRIC FOREST \u201CTIME\u201D",
+    categories: ["case-studies", "experiential", "docs"],
+    aspect: "2.39/1",
+    source: { name: "Vimeo", by: "Steve Conry", url: "https://vimeo.com/243180661" },
+    embed: { type: "vimeo", id: "243180661" },
+    thumb: "https://i.vimeocdn.com/video/667313439-fdd411d9af2d5ba815db1a38768fd6037932076b5af52d1eebfce8e65490696f-d_1280?region=us",
+    note: "TEMP: fills a case-study slot. Planning doc lists E Forest as a hero case study. Name per steveconry.com/time (Vimeo title: \u201CONCE UPON THE FOREST: TIME\u201D). Case-study write-up pending."
   }
 ];
 

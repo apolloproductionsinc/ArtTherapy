@@ -150,7 +150,8 @@
       item.source
         ? el("a", { class: "work-item__source", href: item.source.url, target: "_blank", rel: "noopener" },
             [item.source.name + (item.source.by ? " — " + item.source.by : "") + " ↗"])
-        : el("span", { class: "tag-placeholder", text: "placeholder" })
+        : el("span", { class: "tag-placeholder", text: item.tempStill ? "temp still \u2014 video pending" : "placeholder" }),
+      item.tempStill && item.source ? el("span", { class: "tag-placeholder", text: "temp still" }) : null
     ]);
 
     var caption = el("div", { class: "work-item__caption" }, [

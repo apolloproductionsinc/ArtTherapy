@@ -378,6 +378,7 @@ a.work-item__play:hover img { transform: scale(1.025); filter: saturate(1); }
 }
 .work-item__source { color: var(--accent); }
 .work-item__tags { display: block; }
+.work-item__meta .tag-placeholder { display: block; width: fit-content; margin-left: auto; }
 .tag-placeholder {
   display: inline-block;
   margin-top: 6px;
@@ -389,6 +390,7 @@ a.work-item__play:hover img { transform: scale(1.025); filter: saturate(1); }
 @media (max-width: 560px) {
   .work-item__caption { grid-template-columns: 2.25rem 1fr; }
   .work-item__meta { grid-column: 2; grid-row: auto; text-align: left; margin-top: 6px; }
+  .work-item__meta .tag-placeholder { margin-left: 0; }
 }
 
 /* ==================================================================

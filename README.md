@@ -56,7 +56,7 @@ The work list comes from section **6. Website + Capabilities → LANDING PAGE** 
 |---|---|---|
 | BOSE APT B – Mochakk | Mochakk Drops "Neckwear" (Live) \| APT B \| Bose Studios | YouTube (Bose) |
 | Future & Ye | FUTURE x YE "KEEP IT BURNIN" | Vimeo, name per steveconry.com |
-| RHODE | RHODE (**placeholder**) | Dropbox master only |
+| RHODE | RHODE (**temp still**, video pending) | Dropbox master only |
 | LEXUS – Audrey Nuna | Audrey Nuna Live at 88rising Double Happiness (Changes, Baby Blues) — Presented by Lexus | YouTube (88rising) |
 | Nona Doc | Nona — documentary (**placeholder**) | no link in doc |
 | W Hotels | W HOTEL "SOUNDS OF LA" | Vimeo, name per steveconry.com |
@@ -68,19 +68,19 @@ The work list comes from section **6. Website + Capabilities → LANDING PAGE** 
 | Run | Joji - Run (Official Video) | YouTube (88rising) |
 | HITC – Katseye | Katseye Head In The Clouds Festival 2026 | YouTube (masymusica) |
 | Snowglobe | SNOWGLOBE (**placeholder**) | password-protected Vimeo showcase |
-| TikTok Shop – iShowSpeed & Sean O'Malley | iShowSpeed & Sean O'Malley | TikTok (@sportscenternext) |
+| TikTok Shop – iShowSpeed & Sean O'Malley | iShowSpeed & Sean O'Malley (**temp still**) | TikTok (@sportscenternext) |
 | Kanye & Drake | KANYE & DRAKE - FREE LARRY HOOVER CONCERT | YouTube (2infinity) |
 
 ## Before launch: what has to be replaced
 
 **Content and assets**
 
-- [ ] **RHODE**: the doc only links a private Dropbox `.mov` master. Upload it publicly to Vimeo or YouTube, or supply approved stills.
+- [ ] **RHODE**: the doc only links a private Dropbox `.mov` master. The poster is a **temp still** grabbed from that file (`assets/img/temp/rhode-temp.jpg`). Upload the video publicly to Vimeo or YouTube and supply approved stills.
 - [ ] **Nona Doc**: there is no link in the doc. Supply the video link and title.
 - [ ] **SnowGlobe**: the doc link is a *password-protected* Vimeo pitch showcase. Supply a public link and a still.
-- [ ] **Case Studies**: only *Asia Rising* is real. The two "Case study — forthcoming" slots are placeholders. Candidates from the doc are Yonex 2026/27, Controlled Insanity, 88rising and Electric Forest.
+- [ ] **Case Studies**: *Asia Rising*, plus two **temporary** fills taken from the doc's hero case-study list: CONTROLLED INSANITY "YOUR WORST ENEMY" and ELECTRIC FOREST "TIME" (both Vimeo, named as on steveconry.com). Case-study write-ups are still to come; Yonex 2026/27 and 88rising are the other candidates in the doc.
 - [ ] **Third-party uploads**: *HITC – Katseye* (masymusica) and *Kanye & Drake* (2infinity) are fan or third-party channels. Swap them for official uploads where they exist. The Kanye & Drake title has the uploader's suffix "(FULL CONCERT) [WITH TIMESTAMPS]" trimmed.
-- [ ] **Posters/stills**: these are currently hot-linked from YouTube, Vimeo and Red Bull CDNs for preview. Confirm usage rights, then replace them with optimised local stills (WebP or AVIF, about 1600px wide). TikTok and SnowGlobe have no poster yet.
+- [ ] **Posters/stills**: these are currently hot-linked from YouTube, Vimeo and Red Bull CDNs for preview. Confirm usage rights, then replace them with optimised local stills (WebP or AVIF, about 1600px wide). SnowGlobe has no poster yet. TikTok uses a **temp still** (`assets/img/temp/tiktok-speed-omalley-temp.jpg`) that includes the uploader's burned-in caption. Everything in `assets/img/temp/` must be replaced before launch.
 - [ ] **Credits and roles**: the work section says "Selected work from the founders' collective experience. Credits and roles to be confirmed." Verify the attribution for every project, as the planning doc asks. That means separating work by the new company from the founders' prior experience.
 - [ ] **Founder portraits**: all three are placeholders.
 
