@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>art / therapy</title>
+  <meta name="description" content="art / therapy is a creative studio and production company. Ideas, art, experiences, and everything in between.">
+  <!-- PRE-LAUNCH: remove this noindex once the site is approved and live on arttherapy.agency -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#fbfaf7">
+  <meta property="og:title" content="art / therapy">
+  <meta property="og:description" content="We make things happen. Ideas, art, experiences, and everything in between.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://i.vimeocdn.com">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">skip to content</a>
+
+  <!-- Shared SVG defs: chalk / stone grain used by the hero study and placeholders -->
+  <svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0.22"/></feComponentTransfer>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="soften" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </svg>
+
+  <header class="site-header" id="top">
+    <div class="site-header__inner">
+      <a class="wordmark" href="#top" aria-label="art / therapy — back to top">art / therapy</a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-toggle__label">menu</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul class="site-nav__list site-nav__list--work">
+          <li><a href="#work/music" data-filter-link="music">music</a></li>
+          <li><a href="#work/docs" data-filter-link="docs">docs</a></li>
+          <li><a href="#work/commercial" data-filter-link="commercial">commercial</a></li>
+          <li><a href="#work/case-studies" data-filter-link="case-studies">case studies</a></li>
+          <li><a href="#work/experiential" data-filter-link="experiential">experiential</a></li>
+          <li><a href="#work/livestream" data-filter-link="livestream">livestream</a></li>
+        </ul>
+        <ul class="site-nav__list site-nav__list--site">
+          <li><a href="#about">about</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO ======================================================= -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__text">
+        <p class="eyebrow reveal">creative studio &nbsp;/&nbsp; production &nbsp;/&nbsp; live</p>
+        <h1 class="hero__title reveal" id="hero-title">We make things happen.</h1>
+        <p class="hero__lede reveal">Ideas, art, experiences, and everything in between.</p>
+        <p class="hero__body reveal">
+          We help brands stay current with modern tools and strategies, streamline creative
+          workflows, and strengthen their teams. We know how to integrate brands into youth culture.
+        </p>
+        <a class="scroll-cue reveal" href="#work">
+          <span class="scroll-cue__line" aria-hidden="true"></span>
+          <span>selected work</span>
+        </a>
+      </div>
+
+      <figure class="hero__study reveal" aria-hidden="true">
+        <!-- Original sculptural study: plaster plinth, sphere and leaning slab in raking daylight. -->
+        <svg viewBox="0 0 600 720" preserveAspectRatio="xMidYMid slice" role="presentation">
+          <defs>
+            <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f6f4f0"/>
+              <stop offset="0.55" stop-color="#ebe7e0"/>
+              <stop offset="1" stop-color="#e1ddd5"/>
+            </linearGradient>
+            <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#e3dfd7"/>
+              <stop offset="1" stop-color="#ece9e3"/>
+            </linearGradient>
+            <radialGradient id="daylight" cx="0.18" cy="0.12" r="0.75">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.75"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="plinthFront" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#f3f1ec"/>
+              <stop offset="1" stop-color="#d9d4cb"/>
+            </linearGradient>
+            <linearGradient id="plinthSide" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#cfcac0"/>
+              <stop offset="1" stop-color="#c4beb3"/>
+            </linearGradient>
+            <radialGradient id="sphere" cx="0.34" cy="0.3" r="0.8">
+              <stop offset="0" stop-color="#fbfaf8"/>
+              <stop offset="0.55" stop-color="#e2ded7"/>
+              <stop offset="1" stop-color="#b9b4ab"/>
+            </radialGradient>
+            <linearGradient id="slab" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#dfe3e6"/>
+              <stop offset="1" stop-color="#c3c9ce"/>
+            </linearGradient>
+          </defs>
+
+          <rect width="600" height="720" fill="url(#wall)"/>
+          <rect width="600" height="720" fill="url(#daylight)"/>
+          <rect y="520" width="600" height="200" fill="url(#floor)"/>
+          <line x1="0" y1="520" x2="600" y2="520" stroke="#d6d1c8" stroke-width="1"/>
+
+          <!-- cast shadows (soft, to the lower right) -->
+          <path d="M318 640 L560 600 L600 640 L600 700 L360 700 Z" fill="#a8a296" opacity="0.28" filter="url(#soften)"/>
+          <ellipse cx="300" cy="402" rx="62" ry="10" fill="#8f897e" opacity="0.35" filter="url(#soften)"/>
+
+          <!-- leaning slab -->
+          <path d="M420 300 L452 296 L476 640 L444 646 Z" fill="url(#slab)"/>
+          <path d="M452 296 L462 300 L486 638 L476 640 Z" fill="#aeb5bb"/>
+
+          <!-- plinth -->
+          <path d="M196 408 L364 408 L386 396 L218 396 Z" fill="#f7f6f3"/>
+          <rect x="196" y="408" width="168" height="244" fill="url(#plinthFront)"/>
+          <path d="M364 408 L386 396 L386 640 L364 652 Z" fill="url(#plinthSide)"/>
+
+          <!-- sphere -->
+          <circle cx="292" cy="342" r="58" fill="url(#sphere)"/>
+          <!-- faint fracture line — the only "event" in the composition -->
+          <path d="M262 300 C 272 318, 268 336, 282 352 S 300 384, 296 398" fill="none" stroke="#b3ada3" stroke-width="0.8" opacity="0.7"/>
+
+          <rect width="600" height="720" fill="#888" filter="url(#grain)"/>
+        </svg>
+        <figcaption class="hero__caption">fig. 01 &nbsp;— study in plaster, raking light</figcaption>
+      </figure>
+    </section>
+
+    <!-- SELECTED WORK ============================================== -->
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="section-head">
+        <h2 class="section-head__title" id="work-title">selected work</h2>
+        <p class="section-head__note">
+          Selected work from the founders&rsquo; collective experience.
+          Credits and roles to be confirmed.
+        </p>
+      </div>
+
+      <div class="filters" role="toolbar" aria-label="Filter work by category">
+        <div class="filters__inner" id="filters"><!-- built by main.js --></div>
+      </div>
+
+      <p class="visually-hidden" id="work-status" aria-live="polite"></p>
+
+      <ol class="work-list" id="work-list"><!-- built by main.js from work-data.js --></ol>
+
+      <noscript>
+        <p class="noscript-note">Enable JavaScript to browse and play the work inline. Projects:
+          Future x Ye &ldquo;Keep It Burnin&rdquo;, Bose APT B &mdash; Mochakk, Lexus &mdash; Audrey Nuna,
+          W Hotel &ldquo;Sounds of LA&rdquo;, NHL Season Opener, Church&rsquo;s Chicken, Rich Brian &ldquo;Lagoon&rdquo;,
+          Asia Rising, Joji, Head In The Clouds, SnowGlobe, TikTok Shop, Kanye &amp; Drake.</p>
+      </noscript>
+    </section>
+
+    <!-- CAPABILITIES =============================================== -->
+    <section class="capabilities" id="capabilities" aria-labelledby="cap-title">
+      <div class="section-head">
+        <h2 class="section-head__title" id="cap-title">capabilities</h2>
+        <p class="section-head__note">
+          Creativity is the purpose. Production and practical execution are how it gets made.
+        </p>
+      </div>
+
+      <ol class="cap-list">
+        <li class="cap reveal">
+          <span class="cap__num">01</span>
+          <h3 class="cap__name">ideate</h3>
+          <p class="cap__desc">Strategic positioning and creative concepting.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap__num">02</span>
+          <h3 class="cap__name">make</h3>
+          <p class="cap__desc">Full-service production execution.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap__num">03</span>
+          <h3 class="cap__name">live</h3>
+          <p class="cap__desc">Live events and livestreaming.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap__num">04</span>
+          <h3 class="cap__name">experience</h3>
+          <p class="cap__desc">Live event and activation management.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap__num">05</span>
+          <h3 class="cap__name">guide</h3>
+          <p class="cap__desc">We help you establish internal production workflows and embrace modern technology to make your content creation seamless.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ABOUT / TEAM =============================================== -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 class="section-head__title" id="about-title">about</h2>
+      </div>
+
+      <div class="about__intro reveal">
+        <!-- DRAFT COPY: company introduction — confirm with founders -->
+        <p>
+          art / therapy brings creative thinking and an artist&rsquo;s sensibility together with
+          end-to-end production, live experiences, and advisory work. We take ideas from strategy
+          and concept through to delivery &mdash; and help brands build the creative teams and
+          workflows that keep the work moving.
+        </p>
+      </div>
+
+      <ul class="founders">
+        <li class="founder reveal">
+          <div class="founder__portrait placeholder placeholder--stone">
+            <span class="placeholder__label">portrait &mdash; placeholder</span>
+          </div>
+          <h3 class="founder__name">Grace Lee</h3>
+          <p class="founder__role">partner</p>
+          <!-- First sentence from the planning doc; remainder is editable draft copy -->
+          <p class="founder__bio">Grace Lee is a creative producer and account lead with over a decade of experience spanning advertising, media, and art across the US and Asia. She brings a collaborative, responsive, solutions-oriented approach to creative partnerships, helping ambitious ideas become reality.</p>
+        </li>
+        <li class="founder reveal">
+          <div class="founder__portrait placeholder placeholder--chalk">
+            <span class="placeholder__label">portrait &mdash; placeholder</span>
+          </div>
+          <h3 class="founder__name">Steve Conry</h3>
+          <p class="founder__role">partner</p>
+          <p class="founder__bio">Steve Conry is an award-winning director, cinematographer, and creative director specializing in visual storytelling, live production, and culture-driven experiences. With an instinct for the relationship between image, sound, and emotion, he brings creative vision and technical expertise to work that captures the energy of a moment and the feeling of being there.</p>
+        </li>
+        <li class="founder reveal">
+          <div class="founder__portrait placeholder placeholder--blue">
+            <span class="placeholder__label">portrait &mdash; placeholder</span>
+          </div>
+          <h3 class="founder__name">Chris Heinrich</h3>
+          <p class="founder__role">partner</p>
+          <p class="founder__bio">Chris Heinrich is a technical and operations-oriented producer with extensive experience in all forms of production and live. He combines practical problem-solving with production expertise to turn complex creative plans into seamless execution.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- CONTACT ==================================================== -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="section-head">
+        <h2 class="section-head__title" id="contact-title">contact</h2>
+      </div>
+      <div class="contact__body reveal">
+        <p class="contact__lede">Have a project, a brief, or a problem worth solving?</p>
+        <!-- PLACEHOLDER: email address not confirmed — replace before launch -->
+        <a class="contact__cta" href="mailto:hello@arttherapy.agency?subject=Project%20inquiry">
+          <span class="contact__email">hello@arttherapy.agency</span>
+          <span class="contact__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <p class="tag-placeholder">placeholder address &mdash; not yet confirmed</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="wordmark wordmark--footer">art / therapy</span>
+    <span>arttherapy.agency</span>
+    <span>&copy; <span id="year">2026</span></span>
+    <a href="#top">back to top &uarr;</a>
+  </footer>
+
+  <script src="assets/js/work-data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
