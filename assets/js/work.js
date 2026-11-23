@@ -145,7 +145,11 @@
   function layout(visible) {
     visible.forEach(function (li, i) {
       var num = $(".work-item__num", li);
-      if (num) num.textContent = String(i + 1).padStart(2, "0") + " / " + String(visible.length).padStart(2, "0");
+      if (num) {
+        num.textContent = String(i + 1).padStart(2, "0") + " ";
+        num.appendChild(el("span", { class: "slash", text: "/" }));
+        num.appendChild(document.createTextNode(" " + String(visible.length).padStart(2, "0")));
+      }
     });
   }
 
@@ -156,7 +160,7 @@
     var count = function (id) { return id === "all" ? WORK.length : WORK.filter(function (w) { return w.categories.indexOf(id) > -1; }).length; };
 
     all.forEach(function (c, i) {
-      if (i > 0) bar.appendChild(el("span", { class: "subnav__sep", "aria-hidden": "true", text: "/" }));
+      if (i > 0) bar.appendChild(el("span", { class: "subnav__sep slash", "aria-hidden": "true", text: "/" }));
       var b = el("button", { type: "button", class: "filter", "data-filter": c.id, "aria-pressed": "false" },
         [c.label, el("sup", { text: String(count(c.id)) })]);
       b.addEventListener("click", function () { set(c.id, true); });
@@ -209,6 +213,7 @@
         ? spec.slice(4).split(",").map(function (id) { return AT.findWork(id.trim()); }).filter(Boolean)
         : WORK;
       items.forEach(function (item, i) { list.appendChild(buildItem(item, i === 0)); });
+      if (AT.redSlashes) AT.redSlashes(list); // any "/" in titles or captions
       var bar = document.getElementById(list.getAttribute("data-filter-bar") || "");
       if (bar) setupFilters(list, bar, document.getElementById("work-status"));
       else layout($$(".work-item", list));

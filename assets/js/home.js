@@ -19,22 +19,46 @@
     } catch (e) { return false; }
   }
 
-  // Put the statement just under the header, as when you land on it.
-  function frameStatement() {
-    var text = document.querySelector(".statement-text");
-    var header = document.querySelector(".site-header");
-    if (!text) return;
-    document.querySelectorAll(".statement .reveal").forEach(function (n) { n.classList.add("is-visible"); });
+  // Once the visitor has scrolled past the intro (and stopped scrolling),
+  // take the intro out of the page so scrolling up stops at the statement.
+  var retired = false;
+  function retireIntro(opts) {
+    if (retired) return;
+    var introEl = document.querySelector(".intro");
+    var anchor = document.querySelector("#statement");
+    if (!introEl || !anchor) return;
+    retired = true;
     var root = document.documentElement, prev = root.style.scrollBehavior;
     root.style.scrollBehavior = "auto";
-    var jump = function () {
-      var y = text.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 0) - 32;
-      window.scrollTo(0, Math.max(0, y));
+    var before = anchor.getBoundingClientRect().top;
+    introEl.hidden = true;
+    document.body.classList.add("intro-gone");
+    document.querySelectorAll(".statement .reveal").forEach(function (n) { n.classList.add("is-visible"); });
+    if (opts && opts.toTop) window.scrollTo(0, 0);
+    else window.scrollBy(0, anchor.getBoundingClientRect().top - before);
+    requestAnimationFrame(function () { root.style.scrollBehavior = prev; });
+  }
+
+  function watchIntroExit() {
+    var introEl = document.querySelector(".intro");
+    var header = document.querySelector(".site-header");
+    if (!introEl) return;
+    var timer = 0;
+    var check = function () {
+      if (retired) return;
+      var hh = header ? header.offsetHeight : 0;
+      // the arrow sits at the foot of the intro; once it has passed under the
+      // header (the arrow's own scroll lands ~64px short of the top) retire it
+      if (introEl.getBoundingClientRect().bottom <= hh + 100) retireIntro();
     };
-    jump();
-    // once more after fonts and images settle, then restore smooth scrolling
-    window.addEventListener("load", function () { jump(); root.style.scrollBehavior = prev; }, { once: true });
-    if (document.readyState === "complete") { jump(); root.style.scrollBehavior = prev; }
+    // wait until scrolling settles so a smooth scroll (e.g. the arrow) can finish
+    var onScroll = function () {
+      clearTimeout(timer);
+      timer = setTimeout(check, 140);
+      if (retired) window.removeEventListener("scroll", onScroll);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    if ("onscrollend" in window) window.addEventListener("scrollend", check);
   }
 
   function intro() {
@@ -62,10 +86,10 @@
     if (cameFromSite()) {
       mark.classList.add("is-open");
       finish();
-      startBlot();
-      frameStatement();
+      retireIntro({ toTop: true });
       return;
     }
+    watchIntroExit();
 
     // Reduced motion, or the visitor has already scrolled: show the end state.
     if (AT.reduceMotion.matches || window.scrollY > 40) {

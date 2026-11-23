@@ -11,9 +11,11 @@
   --ink-3:   #6b6b6b;   /* small meta, 5.3:1 */
   --mute:    #949494;   /* inactive LARGE type only, 3.0:1 */
   --rule:    #e6e6e6;
-  --red:     #ff4a1c;
-  --blot:    #e9e7e3;
-  --panel:   #0b0b0b;   /* capabilities panel */   /* pale stone inkblot behind the intro wordmark */   /* the slash, carried over from the first design */
+  --red:     #ff4a1c;   /* every "/" on the site, from the first design */
+  --blot-deep: #bfb9b0;  /* inkblot tonal gradient: spine to edges */
+  --blot-mid:  #dedad4;
+  --blot-pale: #f6f5f2;
+  --panel:   #0b0b0b;   /* capabilities panel */
   --stone-1: #f3f2f0;
   --stone-2: #e4e2de;
   --blue-1:  #e8ebed;
@@ -34,6 +36,8 @@
   --ease-io: cubic-bezier(.76,0,.24,1);
 
   --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.14'/></svg>");
+
+  --grain-heavy: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.25 -0.38'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
 
   color-scheme: light;
 }
@@ -174,7 +178,7 @@ main { display: block; }
   pointer-events: none;
   overflow: hidden;
 }
-.intro__blot svg { width: min(94vw, 1180px); height: auto; color: var(--blot); }
+.intro__blot svg { width: min(94vw, 1180px); height: auto; }
 .mark {
   position: relative; z-index: 1;
   display: flex; justify-content: center; align-items: baseline;
@@ -216,29 +220,33 @@ main { display: block; }
    landing: statement + capabilities (services list)
    ================================================================== */
 .statement { padding-top: clamp(24px, 6vw, 72px); }
+/* after the intro has been scrolled past (or skipped) it leaves the page */
+.intro[hidden] { display: none; }
+.intro-gone main { padding-top: var(--header-h); }
+.intro-gone .statement { padding-top: 32px; }
 
-.services { margin-top: var(--section-gap); }
+.services { margin-top: var(--section-gap); padding: 0; }
 /* black panel: white type, red hover, soft blurred glow + grain */
 .services__grid {
   position: relative; isolation: isolate; overflow: hidden;
   align-items: start;
   background: var(--panel);
   color: #fff;
-  border-radius: clamp(14px, 1.6vw, 24px);
-  padding: clamp(28px, 5vw, 72px) clamp(20px, 4vw, 56px) clamp(32px, 5vw, 72px);
+  padding: clamp(56px, 8vw, 120px) var(--gutter) clamp(56px, 8vw, 120px);
 }
 .services__grid::before {
   content: ""; position: absolute; inset: -20%; z-index: -2; pointer-events: none;
   background:
-    radial-gradient(32% 40% at 72% 28%, rgba(255,255,255,.16), rgba(255,255,255,0) 70%),
-    radial-gradient(30% 38% at 18% 82%, rgba(255,74,28,.20), rgba(255,74,28,0) 70%),
-    radial-gradient(40% 50% at 45% 60%, rgba(120,116,110,.18), rgba(120,116,110,0) 70%);
-  filter: blur(40px);
+    radial-gradient(30% 42% at 74% 26%, rgba(236,232,226,.30), rgba(236,232,226,0) 70%),
+    radial-gradient(34% 46% at 14% 86%, rgba(255,74,28,.34), rgba(255,74,28,0) 72%),
+    radial-gradient(44% 56% at 46% 58%, rgba(132,126,118,.26), rgba(132,126,118,0) 72%);
+  filter: blur(48px);
   animation: glow-drift 22s ease-in-out infinite alternate;
 }
 .services__grid::after {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: var(--grain); opacity: .55; mix-blend-mode: screen;
+  background-image: var(--grain-heavy); background-size: 180px 180px;
+  opacity: .2; mix-blend-mode: screen;
 }
 @keyframes glow-drift {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
@@ -299,7 +307,7 @@ main { display: block; }
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 0;
   padding: 14px 0; border-bottom: 1px solid var(--rule);
 }
-.subnav__sep { color: var(--mute); padding: 0 12px; font-size: var(--fs-s); user-select: none; }
+.subnav__sep { padding: 0 12px; font-size: var(--fs-s); user-select: none; }
 .filter {
   font-size: var(--fs-s); color: var(--ink-3);
   padding: 6px 0; position: relative;

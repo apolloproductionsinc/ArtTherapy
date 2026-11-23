@@ -30,8 +30,16 @@
     svg.innerHTML =
       '<defs><filter id="' + uid + '-goo" filterUnits="userSpaceOnUse" x="0" y="0" width="' + W + '" height="' + H + '" color-interpolation-filters="sRGB">' +
       '<feGaussianBlur in="SourceGraphic" stdDeviation="' + (opts.blur || 16) + '" result="b"/>' +
-      '<feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 36 -16"/></filter></defs>' +
-      '<g filter="url(#' + uid + '-goo)" fill="currentColor">' +
+      // softer alpha threshold than a hard "goo" so the edges feather slightly
+      '<feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8"/></filter>' +
+      // tonal fill: deeper stone at the spine, paling toward the edges
+      '<radialGradient id="' + uid + '-fill" gradientUnits="userSpaceOnUse" cx="' + cx + '" cy="' + (H * 0.52) + '" r="' + (W * 0.5) + '">' +
+      '<stop offset="0" style="stop-color:var(--blot-deep,#c9c4bc)"/>' +
+      '<stop offset="0.42" style="stop-color:var(--blot-mid,#dedad4)"/>' +
+      '<stop offset="1" style="stop-color:var(--blot-pale,#f4f2ef)"/>' +
+      '</radialGradient>' +
+      '</defs>' +
+      '<g filter="url(#' + uid + '-goo)" fill="url(#' + uid + '-fill)">' +
       '<g id="' + uid + '-half"></g>' +
       '<use href="#' + uid + '-half" transform="matrix(-1 0 0 1 ' + W + ' 0)"/>' +
       '</g>';

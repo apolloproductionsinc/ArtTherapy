@@ -24,6 +24,29 @@
     targets.forEach(function (t) { io.observe(t); });
   };
 
+  /* every visible "/" is brand red --------------------------------- */
+  AT.redSlashes = function (root) {
+    root = root || document.body;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (n.nodeValue.indexOf("/") === -1) return NodeFilter.FILTER_REJECT;
+        var p = n.parentNode;
+        if (!p || p.closest("script, style, svg, textarea, .slash")) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var frag = document.createDocumentFragment();
+      n.nodeValue.split("/").forEach(function (part, i) {
+        if (i > 0) { var s = document.createElement("span"); s.className = "slash"; s.textContent = "/"; frag.appendChild(s); }
+        if (part) frag.appendChild(document.createTextNode(part));
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+  };
+
   /* studio clock: <span data-clock="America/Los_Angeles"> ---------- */
   function tickClocks() {
     document.querySelectorAll("[data-clock]").forEach(function (el) {
@@ -46,6 +69,7 @@
     window.setInterval(tickClocks, 20000);
     var y = document.querySelector("[data-year]");
     if (y) y.textContent = String(new Date().getFullYear());
+    AT.redSlashes();
     AT.observeReveals();
   }
 
