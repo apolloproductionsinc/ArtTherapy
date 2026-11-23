@@ -4,8 +4,8 @@ A four-page static site for **art / therapy** (arttherapy.agency). It's plain HT
 
 | Page | What's on it |
 |---|---|
-| `index.html` (landing) | Intro: **a/t** holds for a second, then *art* and *therapy* open outward from the slash, and a down arrow draws in. Below it: the positioning statement, a capabilities list (hover, focus or tap a capability to see its line of copy and a still), then four featured pieces with a link to all work. |
-| `work.html` | All work from the landing-page list, with a sub-navigation: **all / commercial / documentary / live / experiential / music**. Each filter shows only those videos and can be deep-linked, e.g. `work.html#music`. Videos play inline. |
+| `index.html` (landing) | Intro: **a/t** holds for a second, then *art* and *therapy* open outward from the slash, and a down arrow draws in. Below it: the positioning statement, a capabilities list (hover, focus or tap a capability to see its line of copy and a still), then three featured pieces with a link to all work. Arriving from another page (the wordmark links to `index.html#statement`) skips the intro and opens framed on the statement. |
+| `work.html` | All work from the landing-page list, with a sub-navigation: **all / commercial / documentary / live / experiential / music**. Each filter shows only those videos and can be deep-linked, e.g. `work.html#music`. Every project uses the same 16:9 tile size: three across on desktop, two on tablet, one on phone. Videos play inline. |
 | `about.html` | Company statement and introduction, a founder quote, "what we bring", the five capabilities, and the three founder bios. |
 | `contact.html` | Email, studio location with a live Los Angeles local-time clock, and social links. These come from the first design, simplified. |
 
@@ -25,7 +25,7 @@ Then open http://localhost:8000. You need a server, not `file://`, because YouTu
 index.html, work.html, about.html, contact.html
 assets/css/styles.css    all styles (tokens at the top under :root)
 assets/js/work-data.js   portfolio entries and filter categories (edit this to add, remove or reorder work)
-assets/js/work.js        work list, filters, video facades, layout rhythm
+assets/js/work.js        work list, filters, video facades
 assets/js/home.js        landing intro animation and capabilities list
 assets/js/site.js        shared: header, reveals, studio clock, footer year
 assets/img/temp/         TEMPORARY frame grabs (replace before launch)
@@ -35,6 +35,7 @@ assets/img/temp/         TEMPORARY frame grabs (replace before launch)
 - **Featured work on the landing page:** the `data-work-list="ids:…"` attribute in `index.html`.
 - **Capability stills:** the `data-still` attribute on each capability button in `index.html`. Each one names a work id.
 - **Categories:** the `categories` field on each entry, plus `window.AT_CATEGORIES` at the bottom of `work-data.js`.
+- **Brand red:** `--red: #ff4a1c` colours the slash in every wordmark. It's carried over from the first design.
 - **Reduced motion:** with `prefers-reduced-motion` turned on, the intro shows the finished wordmark straight away.
 
 ## Work content

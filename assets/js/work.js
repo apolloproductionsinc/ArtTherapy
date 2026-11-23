@@ -99,7 +99,6 @@
       "data-categories": item.categories.join(" "), "data-aspect": item.aspect || "16/9"
     });
     var media = el("div", { class: "work-item__media" });
-    media.style.setProperty("--ar", (item.aspect || "16/9").replace("/", " / "));
     var facade;
 
     if (item.embed && !window.AT_LINK_OUT) {
@@ -142,17 +141,9 @@
     return li;
   }
 
-  /* layout rhythm: varied widths, recomputed on every filter ---- */
-  var PATTERN = ["full", "pair-a", "pair-b", "right", "left", "pair-a", "pair-b", "inset"];
+  /* numbering for the visible tiles (all tiles share one size) */
   function layout(visible) {
     visible.forEach(function (li, i) {
-      var l = PATTERN[i % PATTERN.length];
-      if (l === "pair-a" && !visible[i + 1]) l = "inset";
-      var aspect = li.getAttribute("data-aspect");
-      var rightish = l === "pair-b" || l === "right";
-      if (aspect === "9/16") l = rightish ? "portrait-right" : "portrait-left";
-      else if (aspect === "1/1") l = rightish ? "square-right" : "square-left";
-      li.setAttribute("data-layout", l);
       var num = $(".work-item__num", li);
       if (num) num.textContent = String(i + 1).padStart(2, "0") + " / " + String(visible.length).padStart(2, "0");
     });

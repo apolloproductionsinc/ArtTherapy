@@ -10,6 +10,32 @@
   var HOLD_MS = 1000;      // how long "a/t" holds before opening
   var OPEN_MS = 1250;      // must match the CSS transition on .mark__grow
 
+  function cameFromSite() {
+    if (location.hash === "#statement") return true;
+    try {
+      var ref = document.referrer ? new URL(document.referrer) : null;
+      return !!ref && ref.origin === location.origin && ref.pathname !== location.pathname;
+    } catch (e) { return false; }
+  }
+
+  // Put the statement just under the header, as when you land on it.
+  function frameStatement() {
+    var text = document.querySelector(".statement-text");
+    var header = document.querySelector(".site-header");
+    if (!text) return;
+    document.querySelectorAll(".statement .reveal").forEach(function (n) { n.classList.add("is-visible"); });
+    var root = document.documentElement, prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    var jump = function () {
+      var y = text.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 0) - 32;
+      window.scrollTo(0, Math.max(0, y));
+    };
+    jump();
+    // once more after fonts and images settle, then restore smooth scrolling
+    window.addEventListener("load", function () { jump(); root.style.scrollBehavior = prev; }, { once: true });
+    if (document.readyState === "complete") { jump(); root.style.scrollBehavior = prev; }
+  }
+
   function intro() {
     var body = document.body;
     var mark = document.querySelector(".mark");
@@ -21,6 +47,15 @@
       body.classList.remove("is-intro");
       grows.forEach(function (g) { g.style.width = "auto"; });
       if (arrow) arrow.classList.add("is-on");
+    }
+
+    // Coming back from another page of the site (index.html#statement, or a
+    // same-site referrer): skip the intro and open framed on the statement.
+    if (cameFromSite()) {
+      mark.classList.add("is-open");
+      finish();
+      frameStatement();
+      return;
     }
 
     // Reduced motion, or the visitor has already scrolled: show the end state.
