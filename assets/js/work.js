@@ -4,9 +4,11 @@
  *   <ol data-work-list="ids:a,b,c">                                just those tiles
  * Filters: all / commercial / documentary / live / experiential / music,
  * deep-linkable as work.html#music. They narrow the tiles and the index.
- * Clicking a tile or an index entry opens the project full bleed across the
- * whole screen (the viewer): still or loop, play to load the video, ← / →
- * through the filtered projects, Esc or × to close.
+ *   <section data-stage>   the work page: lands on one project full bleed,
+ *                          with a drop-down index (filter + list) on the right
+ * Clicking a tile opens the project full bleed across the whole screen (the
+ * viewer): still or loop, play to load the video, ← / → through the filtered
+ * projects, Esc or × to close.
  * Set window.AT_LINK_OUT = true on hosts that block iframes; the viewer then
  * links to the source instead of embedding the player.
  */
@@ -266,14 +268,14 @@
   }
 
   /* index list along the right ------------------------------------- */
-  function buildIndex(list, items) {
+  function buildIndex(list, items, onPick) {
     items.forEach(function (item) {
       var btn = el("button", { type: "button", class: "idx", "data-id": item.id }, [
         el("span", { class: "idx__num", "aria-hidden": "true" }),
         el("span", { class: "idx__title", text: item.title }),
         el("span", { class: "idx__kicker", text: item.kicker || "" })
       ]);
-      btn.addEventListener("click", function () { openViewer(item); });
+      btn.addEventListener("click", function () { (onPick || openViewer)(item); });
       var hot = function (on) { var t = document.getElementById("work-" + item.id); if (t) t.classList.toggle("is-hot", on); };
       btn.addEventListener("mouseenter", function () { hot(true); });
       btn.addEventListener("mouseleave", function () { hot(false); });
@@ -351,8 +353,145 @@
     window.addEventListener("hashchange", function () { set(fromHash(), false); });
   }
 
+  /* work page: full-bleed stage + drop-down index -------------------
+     The page lands on one project full bleed. "index" on the right drops
+     down a panel with the category filter and the project list; picking a
+     project swaps the work in place. ← / → (buttons or keys) step through
+     the filtered projects; play loads the video; Esc closes the panel. */
+  function setupStage(root) {
+    var media = $(".stage__media", root), center = $(".stage__center", root);
+    var countEl = $(".stage__count", root), titleEl = $(".stage__title", root), metaEl = $(".stage__meta", root);
+    var toggle = $(".stage__toggle", root);
+    var toggleCount = $(".stage__toggle-count", root);
+    var bar = $(".work-index__filters", root), list = $(".work-index__list", root);
+    var narrow = window.matchMedia("(max-width: 720px)");
+    var seq = WORK.slice(), pos = 0;
+
+    function setOpen(open) {
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      root.classList.toggle("is-panel-open", open);
+    }
+    toggle.addEventListener("click", function () { setOpen(toggle.getAttribute("aria-expanded") !== "true"); });
+
+    function frameFor(item) {
+      var frame = el("div", { class: "stage__frame" });
+      if (item.thumb) {
+        frame.appendChild(el("img", { src: item.thumb, alt: "Still from " + item.title, decoding: "async", referrerpolicy: "no-referrer" }));
+        if (item.loop && !reduced()) {
+          var v = el("video", { muted: "", loop: "", playsinline: "", autoplay: "", "aria-hidden": "true" });
+          v.muted = true; v.src = item.loop; v.poster = item.thumb;
+          frame.appendChild(v);
+        }
+      } else {
+        frame.appendChild(placeholder(item));
+      }
+      return frame;
+    }
+    function clearOld(nodes) { nodes.forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); }); }
+
+    function show(item) {
+      pos = Math.max(0, seq.indexOf(item));
+      root.classList.remove("is-playing");
+      var old = $$(".stage__frame, iframe", media);
+      var frame = frameFor(item);
+      media.appendChild(frame);
+      var fadeIn = function () { frame.classList.add("is-in"); };
+      if (reduced()) { fadeIn(); clearOld(old); }
+      else {
+        requestAnimationFrame(function () { requestAnimationFrame(fadeIn); });
+        setTimeout(function () { clearOld(old); }, 700);
+      }
+      countEl.textContent = pad(pos + 1) + " / " + pad(seq.length);
+      titleEl.textContent = item.title;
+      metaEl.textContent = [item.kicker, item.categories.map(catLabel).join(" · ")].filter(Boolean).join("  —  ");
+      if (item.source) {
+        metaEl.appendChild(document.createTextNode("  —  "));
+        metaEl.appendChild(el("a", { href: item.source.url, target: "_blank", rel: "noopener", class: "ul-link" },
+          [item.source.name + (item.source.by ? " — " + item.source.by : "") + " ↗"]));
+      }
+      center.textContent = "";
+      if (item.embed && !window.AT_LINK_OUT) {
+        var playBtn = el("button", { type: "button", class: "viewer__play", "aria-label": "Play " + item.title }, [
+          el("span", { class: "viewer__play-icon", "aria-hidden": "true" }), "play"
+        ]);
+        playBtn.addEventListener("click", function () {
+          var iframe = el("iframe", {
+            src: embedUrl(item.embed), title: item.title + " — video player",
+            allow: "autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write",
+            allowfullscreen: "", referrerpolicy: "strict-origin-when-cross-origin"
+          });
+          media.textContent = "";
+          media.appendChild(iframe);
+          center.textContent = "";
+          root.classList.add("is-playing");
+          $("[data-stage-next]", root).focus({ preventScroll: true });
+        });
+        center.appendChild(playBtn);
+      } else if (item.source) {
+        center.appendChild(el("a", { class: "viewer__play viewer__play--out", href: item.source.url, target: "_blank", rel: "noopener" },
+          ["watch on " + item.source.name + " ↗"]));
+      }
+      markCurrent(item.id);
+      var nextItem = seq[(pos + 1) % seq.length];
+      if (nextItem && nextItem.thumb) { var im = new Image(); im.referrerPolicy = "no-referrer"; im.src = nextItem.thumb; }
+    }
+    function step(dir) { if (seq.length > 1) show(seq[(pos + dir + seq.length) % seq.length]); }
+    $("[data-stage-prev]", root).addEventListener("click", function () { step(-1); });
+    $("[data-stage-next]", root).addEventListener("click", function () { step(1); });
+
+    buildIndex(list, WORK, function (item) {
+      show(item);
+      if (narrow.matches) setOpen(false);
+    });
+    if (AT.redSlashes) AT.redSlashes(list);
+
+    var all = [{ id: "all", label: "all" }].concat(CATS);
+    var count = function (id) { return id === "all" ? WORK.length : WORK.filter(function (w) { return w.categories.indexOf(id) > -1; }).length; };
+    all.forEach(function (c, i) {
+      if (i > 0) bar.appendChild(el("span", { class: "subnav__sep slash", "aria-hidden": "true", text: "/" }));
+      var b = el("button", { type: "button", class: "filter", "data-filter": c.id, "aria-pressed": "false" },
+        [c.label, el("sup", { text: String(count(c.id)) })]);
+      b.addEventListener("click", function () { applyFilter(c.id, true); });
+      bar.appendChild(b);
+    });
+
+    function applyFilter(id, fromClick) {
+      if (id !== "all" && !CATS.some(function (c) { return c.id === id; })) id = "all";
+      currentFilter = id;
+      var rows = $$(".idx-row", list).filter(function (row) {
+        var on = id === "all" || row.getAttribute("data-categories").split(" ").indexOf(id) > -1;
+        row.hidden = !on;
+        return on;
+      });
+      number(rows, ".idx__num", false);
+      $$(".filter", bar).forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-filter") === id ? "true" : "false"); });
+      toggleCount.textContent = id === "all" ? "" : catLabel(id);
+      var current = seq[pos];
+      seq = WORK.filter(inFilter);
+      show(seq.indexOf(current) > -1 ? current : seq[0]);
+      if (fromClick) {
+        try { history.replaceState(null, "", id === "all" ? location.pathname + location.search : "#" + id); } catch (e) {}
+      }
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (V && !V.root.hidden) return; // the pop-out viewer handles its own keys
+      var t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+      else if (e.key === "Escape" && root.classList.contains("is-panel-open")) { setOpen(false); toggle.focus(); }
+    });
+
+    var fromHash = function () { var h = location.hash.replace("#", ""); return CATS.some(function (c) { return c.id === h; }) ? h : "all"; };
+    applyFilter(fromHash(), false);
+    if (fromHash() !== "all") setOpen(true);
+    window.addEventListener("hashchange", function () { applyFilter(fromHash(), false); });
+  }
+
   /* init ---------------------------------------------------------- */
   function init() {
+    $$("[data-stage]").forEach(setupStage);
     $$("[data-work-list]").forEach(function (list) {
       var spec = list.getAttribute("data-work-list");
       var items = spec.indexOf("ids:") === 0

@@ -32,28 +32,34 @@
     </div>
   </header>
 
-  <main id="main" class="page">
-    <div class="grid12 page-head">
-      <div class="page-head__title">
-        <h1 class="label">work</h1>
-        <p class="statement-text" style="margin-top:18px">Commercial, documentary, live, experiential and music.</p>
+  <main id="main">
+    <h1 class="visually-hidden">Work</h1>
+    <!-- Full-bleed work. The index (filter + list) drops down from the toggle on the right. -->
+    <section class="stage" data-stage aria-label="Work, one project at a time">
+      <div class="stage__media"></div>
+      <div class="stage__shade" aria-hidden="true"></div>
+      <div class="stage__center"></div>
+      <div class="stage__bar">
+        <span class="stage__count" aria-hidden="true"></span>
+        <div class="stage__caption">
+          <h2 class="stage__title" aria-live="polite"></h2>
+          <p class="stage__meta"></p>
+        </div>
+        <div class="stage__nav">
+          <button class="stage__btn" type="button" data-stage-prev aria-label="Previous project">&larr; prev</button>
+          <button class="stage__btn" type="button" data-stage-next aria-label="Next project">next &rarr;</button>
+        </div>
       </div>
-      <p class="page-head__note">Selected work from the founders&rsquo; collective experience. Credits and roles to be confirmed.</p>
-    </div>
-
-    <p class="visually-hidden" id="work-status" aria-live="polite"></p>
-
-    <div class="work-layout">
-      <ol class="work-list" data-work-list="all" data-filter-bar="work-filters" data-index="work-index" aria-label="Work"></ol>
-      <aside class="work-index" aria-label="Project index">
-        <nav class="work-index__filters" id="work-filters" aria-label="Filter work by category"><!-- built by work.js --></nav>
-        <ol class="work-index__list" id="work-index"><!-- built by work.js --></ol>
-      </aside>
-    </div>
-
-    <noscript>
-      <p class="noscript-note">Turn on JavaScript to browse, filter and play the work.</p>
-    </noscript>
+      <button class="stage__toggle" type="button" aria-expanded="false" aria-controls="stage-panel">
+        <span>index</span><span class="stage__toggle-count"></span><span class="stage__chev" aria-hidden="true"></span>
+      </button>
+      <div class="stage__panel" id="stage-panel" role="region" aria-label="Project index and filter">
+        <nav class="work-index__filters" id="work-filters" aria-label="Filter work by category"></nav>
+        <ol class="work-index__list" id="work-index"></ol>
+        <p class="stage__note">Selected work from the founders&rsquo; collective experience. Credits and roles to be confirmed.</p>
+      </div>
+      <noscript><p class="noscript-note" style="position:absolute;inset:auto 0 0;padding:24px;color:#fff">Turn on JavaScript to browse the work.</p></noscript>
+    </section>
   </main>
 
   <footer class="site-footer">
