@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://i.ytimg.com">
   <link rel="preconnect" href="https://i.vimeocdn.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Inter:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -37,8 +37,9 @@
   </header>
 
   <main id="main">
-    <!-- HERO: a window that flips through selected work, then the wordmark -->
+    <!-- HERO: the ART SUPPLY wordmark, then the work, full bleed, flipping through selected projects -->
     <section class="hero" aria-label="Introduction">
+      <h1 class="hero__logo"><span class="hero__logo-fit">Art Supply</span></h1>
       <figure class="flip" role="region" aria-roledescription="carousel" aria-label="Selected work"
         data-flip="bose-apt-b-mochakk,lexus-audrey-nuna,w-hotels-sounds-of-la,future-ye-keep-it-burnin,nhl-season-opener,hitc-katseye,churchs-chicken,rich-brian-lagoon,joji-slow-dancing,controlled-insanity,asia-rising,joji-run,electric-forest-time,kanye-drake-larry-hoover">
         <a class="flip__window" href="work.html">
@@ -57,10 +58,6 @@
           </span>
         </figcaption>
       </figure>
-      <h1 class="hero__logo">Art Supply</h1>
-      <a class="hero__arrow" href="#statement" aria-label="Scroll down">
-        <svg viewBox="0 0 18 56" aria-hidden="true"><path d="M9 1 V54 M1.5 46.5 L9 54 L16.5 46.5"/></svg>
-      </a>
     </section>
 
     <!-- STATEMENT -->
@@ -86,7 +83,11 @@
         </div>
         <div class="wheel__dial">
           <div class="wheel__ring">
-            <span class="wheel__ticks" aria-hidden="true"></span>
+            <span class="wheel__petal" style="--a: 0deg" aria-hidden="true"></span>
+            <span class="wheel__petal" style="--a: 72deg" aria-hidden="true"></span>
+            <span class="wheel__petal" style="--a: 144deg" aria-hidden="true"></span>
+            <span class="wheel__petal" style="--a: 216deg" aria-hidden="true"></span>
+            <span class="wheel__petal" style="--a: 288deg" aria-hidden="true"></span>
             <ul class="wheel__list" aria-label="Capabilities">
               <li class="wheel__slot" style="--a: 0deg"><button class="wheel__item" type="button" aria-pressed="true" data-desc="Strategic positioning and creative concepting.">Ideate</button></li>
               <li class="wheel__slot" style="--a: 72deg"><button class="wheel__item" type="button" aria-pressed="false" data-desc="Full-service production execution.">Make</button></li>

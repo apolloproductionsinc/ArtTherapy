@@ -1,12 +1,13 @@
 /* Art Supply — landing page
- * 1. Flip window: the top of the first screen flips through selected work
+ * 0. The ART SUPPLY wordmark is scaled to the full width above the work.
+ * 1. Flip window: the rest of the first screen flips through selected work
  *    (ids in the figure's data-flip attribute, stills from work-data.js).
  *    A project with a `loop` video plays it silently while it is showing.
  *    Auto-advances; pauses on hover, keyboard focus, off screen or when the
  *    tab is hidden; prev / pause / next controls. With reduced motion it
  *    swaps without the 3D flip, shows stills and does not auto-advance.
- * 2. Capabilities wheel: the five capabilities sit around a dial that turns
- *    to bring the chosen one to the top (red pointer). Turns on its own,
+ * 2. Capabilities wheel: five soft petals carry the capabilities around a
+ *    dial that turns to bring the chosen one to the top (coral dot). Turns on its own,
  *    pauses on hover / focus / off screen; click a name or use the arrows.
  */
 (function () {
@@ -131,6 +132,7 @@
     var n = items.length, step = 360 / n;
     var numEl = root.querySelector(".wheel__num");
     var nameEl = root.querySelector(".wheel__name");
+    var petals = Array.prototype.slice.call(root.querySelectorAll(".wheel__petal"));
     var descEl = root.querySelector(".wheel__desc");
     var k = 0, rot = 0;
 
@@ -145,6 +147,7 @@
       k = idx;
       ring.style.setProperty("--rot", rot + "deg");
       items.forEach(function (b, j) { b.setAttribute("aria-pressed", j === k ? "true" : "false"); });
+      petals.forEach(function (pt, j) { pt.classList.toggle("is-active", j === k); });
       numEl.textContent = pad(k + 1) + " / " + pad(n);
       nameEl.textContent = items[k].textContent;
       descEl.setAttribute("aria-live", fromUser ? "polite" : "off");
@@ -165,7 +168,25 @@
     select(0, false);
   }
 
-  function init() { flipWindow(); capsWheel(); }
+  /* 0. hero wordmark: scale "ART SUPPLY" to the full width */
+  function fitLogo() {
+    var h1 = document.querySelector(".hero__logo");
+    var span = h1 && h1.querySelector(".hero__logo-fit");
+    if (!span) return;
+    var fit = function () {
+      var cs = getComputedStyle(h1);
+      var avail = h1.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      span.style.fontSize = "100px";
+      var w = span.getBoundingClientRect().width;
+      if (w > 0) span.style.fontSize = Math.floor(100 * avail / w * 0.995) + "px";
+    };
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    var t = 0;
+    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(fit, 80); });
+  }
+
+  function init() { fitLogo(); flipWindow(); capsWheel(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();
