@@ -1,10 +1,10 @@
-# Art Supply Studios — website
+# Art Supply — website
 
-A four-page static site for **Art Supply Studios** (formerly art / therapy; the domain arttherapy.agency and the placeholder email have not been changed). It's plain HTML, CSS and JavaScript, with no build step.
+A four-page static site for **Art Supply** (formerly art / therapy; the domain arttherapy.agency and the placeholder email have not been changed). It's plain HTML, CSS and JavaScript, with no build step.
 
 | Page | What's on it |
 |---|---|
-| `index.html` (landing) | The top half of the first screen is a window that flips through selected work (a 3D flip every 3.6 s, with prev / pause / next; it pauses on hover, on focus and off screen, and doesn't autoplay with reduced motion). Below it are the large **ART SUPPLY STUDIOS** wordmark and a down arrow. Then come the positioning statement, the capabilities list on a full-bleed black panel with film grain (hover a capability for its line of copy), and three featured pieces. |
+| `index.html` (landing) | The top of the first screen is a full-bleed window that flips through selected work (a 3D flip every 3.6 s, with prev / pause / next; it pauses on hover, on focus and off screen, and doesn't autoplay with reduced motion). Below it are the large **ART SUPPLY** wordmark and a down arrow. Then come the positioning statement and the capabilities: five hairline columns (number, name, line of copy) on a full-bleed black panel with film grain and a red hover. |
 | `work.html` | All work from the landing-page list, with a sub-navigation: **all / commercial / documentary / live / experiential / music**. Each filter shows only those videos and can be deep-linked, e.g. `work.html#music`. Every project uses the same 16:9 tile size: three across on desktop, two on tablet, one on phone. Videos play inline. |
 | `about.html` | Company statement and introduction, a founder quote, "what we bring", the five capabilities, and the three founder bios. |
 | `contact.html` | Email, studio location with a live Los Angeles local-time clock, and social links. These come from the first design, simplified. |
@@ -32,9 +32,8 @@ assets/img/temp/         TEMPORARY frame grabs (replace before launch)
 ```
 
 - **Flip window:** set the project ids in the `data-flip` attribute in `index.html`. The timing is `INTERVAL_MS` in `home.js`.
-- **Featured work on the landing page:** the `data-work-list="ids:…"` attribute in `index.html`.
 - **Categories:** the `categories` field on each entry, plus `window.AT_CATEGORIES` at the bottom of `work-data.js`.
-- **Logo:** "Art Supply Studios" set in Archivo (Google Fonts) at 112% width, bold, uppercase (`.logo` / `--font-logo` in the CSS). It's a type-only wordmark; commission or license a final logo before launch if needed.
+- **Logo:** "Art Supply" set in Archivo (Google Fonts) at 112% width, bold, uppercase (`.logo` / `--font-logo` in the CSS). It's a type-only wordmark; commission or license a final logo before launch if needed.
 - **Brand red:** `--red: #ff4a1c` colours every "/" on the site, carried over from the first design. `AT.redSlashes()` in `site.js` wraps any slash in page text automatically.
 - **Reduced motion:** with `prefers-reduced-motion` turned on, the flip window swaps without animation and doesn't advance on its own.
 
@@ -81,7 +80,7 @@ The list is taken from the planning doc's **LANDING PAGE** list. Titles are the 
 **Contact and technical**
 
 - [ ] **Email**: `hello@arttherapy.agency` is a placeholder on every page, and it still uses the old name.
-- [ ] **Name and domain**: the site now says Art Supply Studios. Check that the name is cleared for use, then update the domain (arttherapy.agency) and the social handles to match.
+- [ ] **Name and domain**: the site now says Art Supply. Check that the name is cleared for use, then update the domain (arttherapy.agency) and the social handles to match.
 - [ ] **Studio city**: "Los Angeles" comes from the first design, which marked it "confirm city". It drives the clock (`data-clock="America/Los_Angeles"`).
 - [ ] **Social handles**: Instagram, LinkedIn and Vimeo are listed as text until the handles exist.
 - [ ] Remove `<meta name="robots" content="noindex, nofollow">` from every page.

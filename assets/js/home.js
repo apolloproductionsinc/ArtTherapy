@@ -1,11 +1,9 @@
-/* Art Supply Studios — landing page
+/* Art Supply — landing page
  * 1. Flip window: the top half of the first screen flips through selected
  *    work (ids in the figure's data-flip attribute, stills from work-data.js).
  *    Auto-advances; pauses on hover, keyboard focus, when off screen or when
  *    the tab is hidden, and has prev / pause / next controls. With reduced
  *    motion it swaps without the 3D flip and does not auto-advance.
- * 2. Capabilities list: hover / focus / tap highlights a capability and
- *    shows its line of copy.
  */
 (function () {
   "use strict";
@@ -100,24 +98,7 @@
     schedule();
   }
 
-  function services() {
-    var list = document.querySelector(".services__list");
-    if (!list) return;
-    var items = Array.prototype.slice.call(list.querySelectorAll(".services__item"));
-    var desc = document.querySelector(".services__desc");
-    items.forEach(function (btn) {
-      var activate = function () {
-        items.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
-        if (desc) desc.textContent = btn.getAttribute("data-desc");
-      };
-      btn.addEventListener("mouseenter", activate);
-      btn.addEventListener("focus", activate);
-      btn.addEventListener("click", activate);
-    });
-    if (items[0]) items[0].setAttribute("aria-pressed", "true");
-  }
-
-  function init() { flipWindow(); services(); }
+  function init() { flipWindow(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -1,4 +1,4 @@
-/* Art Supply Studios — work list
+/* Art Supply — work list
  * Renders projects from work-data.js into any <ol data-work-list>.
  *   data-work-list="all"              every project, with the filter bar
  *   data-work-list="ids:a,b,c"        just those projects (landing feature)
