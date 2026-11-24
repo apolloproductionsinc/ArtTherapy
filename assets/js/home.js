@@ -1,127 +1,103 @@
-/* art / therapy — landing page
- * 1. Intro: "a/t" holds for a second over a still Rorschach blot, then
- *    "art" and "therapy" open outward from the slash, the blot starts
- *    moving, and a down arrow invites the scroll.
- * 2. Capabilities list: hover / focus / tap highlights a capability,
- *    shows its line of copy and swaps the still beside it.
+/* Art Supply Studios — landing page
+ * 1. Flip window: the top half of the first screen flips through selected
+ *    work (ids in the figure's data-flip attribute, stills from work-data.js).
+ *    Auto-advances; pauses on hover, keyboard focus, when off screen or when
+ *    the tab is hidden, and has prev / pause / next controls. With reduced
+ *    motion it swaps without the 3D flip and does not auto-advance.
+ * 2. Capabilities list: hover / focus / tap highlights a capability and
+ *    shows its line of copy.
  */
 (function () {
   "use strict";
   var AT = window.AT = window.AT || {};
-  var HOLD_MS = 1000;      // how long "a/t" holds before opening
-  var OPEN_MS = 1250;      // must match the CSS transition on .mark__grow
+  var INTERVAL_MS = 3600;   // time each project stays up
 
-  function cameFromSite() {
-    if (location.hash === "#statement") return true;
-    try {
-      var ref = document.referrer ? new URL(document.referrer) : null;
-      return !!ref && ref.origin === location.origin && ref.pathname !== location.pathname;
-    } catch (e) { return false; }
-  }
+  function pad(n) { return String(n).padStart(2, "0"); }
 
-  // Once the visitor has scrolled past the intro (and stopped scrolling),
-  // take the intro out of the page so scrolling up stops at the statement.
-  var retired = false;
-  function retireIntro(opts) {
-    if (retired) return;
-    var introEl = document.querySelector(".intro");
-    var anchor = document.querySelector("#statement");
-    if (!introEl || !anchor) return;
-    retired = true;
-    var root = document.documentElement, prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = "auto";
-    var before = anchor.getBoundingClientRect().top;
-    introEl.hidden = true;
-    document.body.classList.add("intro-gone");
-    document.querySelectorAll(".statement .reveal").forEach(function (n) { n.classList.add("is-visible"); });
-    if (opts && opts.toTop) window.scrollTo(0, 0);
-    else window.scrollBy(0, anchor.getBoundingClientRect().top - before);
-    requestAnimationFrame(function () { root.style.scrollBehavior = prev; });
-  }
+  function flipWindow() {
+    var root = document.querySelector("[data-flip]");
+    if (!root || !AT.findWork) return;
+    var items = root.getAttribute("data-flip").split(",")
+      .map(function (id) { return AT.findWork(id.trim()); })
+      .filter(function (w) { return w && w.thumb; });
+    if (!items.length) return;
 
-  function watchIntroExit() {
-    var introEl = document.querySelector(".intro");
-    var header = document.querySelector(".site-header");
-    if (!introEl) return;
-    var timer = 0;
-    var check = function () {
-      if (retired) return;
-      var hh = header ? header.offsetHeight : 0;
-      // the arrow sits at the foot of the intro; once it has passed under the
-      // header (the arrow's own scroll lands ~64px short of the top) retire it
-      if (introEl.getBoundingClientRect().bottom <= hh + 100) retireIntro();
-    };
-    // wait until scrolling settles so a smooth scroll (e.g. the arrow) can finish
-    var onScroll = function () {
+    var win = root.querySelector(".flip__window");
+    var card = root.querySelector(".flip__card");
+    var faceA = root.querySelector(".flip__face--a img");
+    var faceB = root.querySelector(".flip__face--b img");
+    var countEl = root.querySelector(".flip__count");
+    var titleEl = root.querySelector(".flip__title");
+    var toggle = root.querySelector("[data-flip-toggle]");
+    var reduce = AT.reduceMotion && AT.reduceMotion.matches;
+
+    var i = 0, angle = 0, timer = 0, busy = false;
+    var userPaused = reduce, hovered = false, focused = false, visible = true;
+
+    function setImg(img, item, eager) {
+      img.loading = eager ? "eager" : "lazy";
+      img.referrerPolicy = "no-referrer";
+      img.alt = "Still from " + item.title;
+      img.src = item.thumb;
+    }
+    function caption(item) {
+      countEl.textContent = pad(i + 1) + " / " + pad(items.length);
+      titleEl.textContent = item.title;
+      win.setAttribute("aria-label", "See all work. Now showing: " + item.title);
+    }
+    function preload(n) { var im = new Image(); im.referrerPolicy = "no-referrer"; im.src = items[n].thumb; }
+
+    function go(dir, fromUser) {
+      if (busy || items.length < 2) return;
+      var next = (i + dir + items.length) % items.length;
+      titleEl.setAttribute("aria-live", fromUser ? "polite" : "off");
+      if (reduce) {
+        setImg(faceA, items[next], true);
+        i = next; caption(items[i]); preload((i + 1) % items.length);
+        return;
+      }
+      // the face currently turned away gets the next still, then the card turns
+      var hidden = (Math.round(angle / 180) % 2 === 0) ? faceB : faceA;
+      busy = true;
+      setImg(hidden, items[next], true);
+      var turn = function () {
+        angle += dir * 180;
+        card.style.transform = "rotateX(" + angle + "deg)";
+        i = next; caption(items[i]);
+        setTimeout(function () { busy = false; preload((i + 1) % items.length); }, 1000);
+      };
+      if (hidden.decode) hidden.decode().then(turn, turn); else turn();
+    }
+
+    function playing() { return !userPaused && !hovered && !focused && visible && !document.hidden; }
+    function schedule() {
       clearTimeout(timer);
-      timer = setTimeout(check, 140);
-      if (retired) window.removeEventListener("scroll", onScroll);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    if ("onscrollend" in window) window.addEventListener("scrollend", check);
-  }
-
-  function intro() {
-    var body = document.body;
-    var mark = document.querySelector(".mark");
-    var arrow = document.querySelector(".intro__arrow");
-    if (!mark) return;
-    var grows = Array.prototype.slice.call(mark.querySelectorAll(".mark__grow"));
-    // inkblot: drawn still now, set moving when the words spread apart
-    var blotSvg = document.querySelector(".intro__blot svg");
-    var blot = blotSvg && AT.makeBlot ? AT.makeBlot(blotSvg, {
-      seed: parseInt(blotSvg.getAttribute("data-blot"), 10) || 7,
-      count: parseInt(blotSvg.getAttribute("data-count"), 10) || 24
-    }) : null;
-    var startBlot = function () { if (blot) blot.start(); };
-
-    function finish() {
-      body.classList.remove("is-intro");
-      grows.forEach(function (g) { g.style.width = "auto"; });
-      if (arrow) arrow.classList.add("is-on");
+      if (playing()) timer = setTimeout(function () { go(1, false); schedule(); }, INTERVAL_MS);
     }
 
-    // Coming back from another page of the site (index.html#statement, or a
-    // same-site referrer): skip the intro and open framed on the statement.
-    if (cameFromSite()) {
-      mark.classList.add("is-open");
-      finish();
-      retireIntro({ toTop: true });
-      return;
+    setImg(faceA, items[0], true);
+    caption(items[0]);
+    if (items[1]) preload(1);
+
+    root.querySelector("[data-flip-next]").addEventListener("click", function () { go(1, true); schedule(); });
+    root.querySelector("[data-flip-prev]").addEventListener("click", function () { go(-1, true); schedule(); });
+    function syncToggle() {
+      toggle.textContent = userPaused ? "play" : "pause";
+      toggle.setAttribute("aria-pressed", userPaused ? "true" : "false");
+      toggle.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
     }
-    watchIntroExit();
+    toggle.addEventListener("click", function () { userPaused = !userPaused; syncToggle(); schedule(); });
+    syncToggle();
 
-    // Reduced motion, or the visitor has already scrolled: show the end state.
-    if (AT.reduceMotion.matches || window.scrollY > 40) {
-      mark.classList.add("is-open");
-      finish();
-      startBlot();
-      return;
+    root.addEventListener("mouseenter", function () { hovered = true; schedule(); });
+    root.addEventListener("mouseleave", function () { hovered = false; schedule(); });
+    root.addEventListener("focusin", function () { focused = true; schedule(); });
+    root.addEventListener("focusout", function (e) { if (!root.contains(e.relatedTarget)) { focused = false; schedule(); } });
+    document.addEventListener("visibilitychange", schedule);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; schedule(); }).observe(root);
     }
-
-    var start = function () {
-      window.setTimeout(function () {
-        mark.classList.add("is-animating");
-        // next frame so the width transition has a start value to run from
-        requestAnimationFrame(function () {
-          grows.forEach(function (g) { g.style.width = g.scrollWidth + "px"; });
-          mark.classList.add("is-open");
-          startBlot();
-        });
-        window.setTimeout(function () {
-          mark.classList.remove("is-animating");
-          finish();
-        }, OPEN_MS + 150);
-      }, HOLD_MS);
-    };
-    // wait for the webfont (if any) so the measured widths are right
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start, start);
-    else start();
-
-    // let people skip straight past the intro
-    window.addEventListener("scroll", function onS() {
-      if (window.scrollY > 40) { window.removeEventListener("scroll", onS); mark.classList.add("is-open"); finish(); startBlot(); }
-    }, { passive: true });
+    schedule();
   }
 
   function services() {
@@ -129,35 +105,19 @@
     if (!list) return;
     var items = Array.prototype.slice.call(list.querySelectorAll(".services__item"));
     var desc = document.querySelector(".services__desc");
-    var frame = document.querySelector(".services__img");
-    var cap = document.querySelector(".services__cap");
-    var imgs = {};
-
     items.forEach(function (btn) {
-      var work = AT.findWork && AT.findWork(btn.getAttribute("data-still"));
-      if (work && work.thumb && frame) {
-        var img = AT.el("img", { src: work.thumb, alt: "", loading: "lazy", decoding: "async", referrerpolicy: "no-referrer" });
-        frame.appendChild(img);
-        imgs[btn.id] = { img: img, title: work.title };
-      }
       var activate = function () {
         items.forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); });
         if (desc) desc.textContent = btn.getAttribute("data-desc");
-        Object.keys(imgs).forEach(function (k) { imgs[k].img.classList.toggle("is-active", k === btn.id); });
-        if (cap) cap.textContent = imgs[btn.id] ? "still: " + imgs[btn.id].title : "";
       };
       btn.addEventListener("mouseenter", activate);
       btn.addEventListener("focus", activate);
       btn.addEventListener("click", activate);
     });
-    if (items[0]) {
-      var first = items[0];
-      first.setAttribute("aria-pressed", "true");
-      if (imgs[first.id]) { imgs[first.id].img.loading = "eager"; imgs[first.id].img.classList.add("is-active"); if (cap) cap.textContent = "still: " + imgs[first.id].title; }
-    }
+    if (items[0]) items[0].setAttribute("aria-pressed", "true");
   }
 
-  function init() { intro(); services(); }
+  function init() { flipWindow(); services(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })();

@@ -1,4 +1,4 @@
-/* art / therapy — shared behaviour for every page
+/* Art Supply Studios — shared behaviour for every page
  * header border on scroll, scroll reveals, live studio clock, footer year
  */
 (function () {

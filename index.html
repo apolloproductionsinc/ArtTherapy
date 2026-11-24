@@ -3,27 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>art / therapy</title>
-  <meta name="description" content="art / therapy is a creative studio and production company. Ideas, art, experiences, and everything in between.">
+  <title>Art Supply Studios</title>
+  <meta name="description" content="Art Supply Studios is a creative studio and production company. Ideas, art, experiences, and everything in between.">
   <!-- PRE-LAUNCH: remove noindex on every page once the site is approved and live -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#ffffff">
-  <meta property="og:title" content="art / therapy">
+  <meta property="og:title" content="Art Supply Studios">
   <meta property="og:description" content="We make things happen. Ideas, art, experiences, and everything in between.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel="preconnect" href="https://i.vimeocdn.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Inter:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="assets/css/styles.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="is-intro" data-page="home">
+<body data-page="home">
   <a class="skip-link" href="#main">skip to content</a>
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a class="wordmark" href="index.html" aria-label="art / therapy — home">art <span class="slash">/</span> therapy</a>
+      <a class="logo" href="index.html">Art Supply Studios</a>
       <nav class="site-nav" aria-label="Primary">
         <ul>
           <li><a class="ul-link" href="work.html">work</a></li>
@@ -35,16 +37,29 @@
   </header>
 
   <main id="main">
-    <!-- INTRO: a/t → art / therapy, then the arrow -->
-    <section class="intro" aria-label="Introduction">
-      <div class="intro__blot" aria-hidden="true"><svg data-blot="7" data-count="24"></svg></div>
-      <h1 class="mark" aria-label="art / therapy">
-        <span class="mark__l" aria-hidden="true">a<span class="mark__grow">rt</span></span>
-        <span class="mark__slash slash" aria-hidden="true">/</span>
-        <span class="mark__r" aria-hidden="true">t<span class="mark__grow">herapy</span></span>
-      </h1>
-      <a class="intro__arrow" href="#statement" aria-label="Scroll down">
-        <svg viewBox="0 0 18 64" aria-hidden="true"><path d="M9 1 V62 M1.5 54.5 L9 62 L16.5 54.5"/></svg>
+    <!-- HERO: a window that flips through selected work, then the wordmark -->
+    <section class="hero" aria-label="Introduction">
+      <figure class="flip" role="region" aria-roledescription="carousel" aria-label="Selected work"
+        data-flip="bose-apt-b-mochakk,lexus-audrey-nuna,w-hotels-sounds-of-la,future-ye-keep-it-burnin,nhl-season-opener,hitc-katseye,churchs-chicken,rich-brian-lagoon,joji-slow-dancing,controlled-insanity,asia-rising,joji-run,electric-forest-time,kanye-drake-larry-hoover">
+        <a class="flip__window" href="work.html">
+          <span class="flip__card">
+            <span class="flip__face flip__face--a"><img alt="" decoding="async"></span>
+            <span class="flip__face flip__face--b"><img alt="" decoding="async"></span>
+          </span>
+        </a>
+        <figcaption class="flip__bar">
+          <span class="flip__count" aria-hidden="true">01 / 01</span>
+          <span class="flip__title" aria-live="off">Selected work</span>
+          <span class="flip__controls">
+            <button class="flip__btn" type="button" data-flip-prev aria-label="Previous project">&larr;</button>
+            <button class="flip__btn" type="button" data-flip-toggle aria-pressed="false">pause</button>
+            <button class="flip__btn" type="button" data-flip-next aria-label="Next project">&rarr;</button>
+          </span>
+        </figcaption>
+      </figure>
+      <h1 class="hero__logo">Art Supply Studios</h1>
+      <a class="hero__arrow" href="#statement" aria-label="Scroll down">
+        <svg viewBox="0 0 18 56" aria-hidden="true"><path d="M9 1 V54 M1.5 46.5 L9 54 L16.5 46.5"/></svg>
       </a>
     </section>
 
@@ -59,17 +74,13 @@
       <div class="grid12 services__grid">
         <h2 class="label services__label" id="cap-label">capabilities</h2>
         <div class="services__list">
-          <button class="services__item" type="button" id="cap-ideate" aria-pressed="false" data-still="future-ye-keep-it-burnin" data-desc="Strategic positioning and creative concepting.">Ideate</button>
-          <button class="services__item" type="button" id="cap-make" aria-pressed="false" data-still="w-hotels-sounds-of-la" data-desc="Full-service production execution.">Make</button>
-          <button class="services__item" type="button" id="cap-live" aria-pressed="false" data-still="hitc-katseye" data-desc="Live events and livestreaming.">Live</button>
-          <button class="services__item" type="button" id="cap-experience" aria-pressed="false" data-still="lexus-audrey-nuna" data-desc="Live event and activation management.">Experience</button>
-          <button class="services__item" type="button" id="cap-guide" aria-pressed="false" data-still="controlled-insanity" data-desc="We help you establish internal production workflows and embrace modern technology to make your content creation seamless.">Guide</button>
+          <button class="services__item" type="button" id="cap-ideate" aria-pressed="false" data-desc="Strategic positioning and creative concepting.">Ideate</button>
+          <button class="services__item" type="button" id="cap-make" aria-pressed="false" data-desc="Full-service production execution.">Make</button>
+          <button class="services__item" type="button" id="cap-live" aria-pressed="false" data-desc="Live events and livestreaming.">Live</button>
+          <button class="services__item" type="button" id="cap-experience" aria-pressed="false" data-desc="Live event and activation management.">Experience</button>
+          <button class="services__item" type="button" id="cap-guide" aria-pressed="false" data-desc="We help you establish internal production workflows and embrace modern technology to make your content creation seamless.">Guide</button>
           <p class="services__desc" aria-live="polite">Strategic positioning and creative concepting.</p>
         </div>
-        <figure class="services__figure" aria-hidden="true">
-          <div class="services__img"></div>
-          <figcaption class="services__cap"></figcaption>
-        </figure>
       </div>
     </section>
 
@@ -84,7 +95,7 @@
   </main>
 
   <footer class="site-footer">
-    <span class="wordmark">art <span class="slash">/</span> therapy</span>
+    <span class="logo">Art Supply Studios</span>
     <span>Los Angeles &middot; <span data-clock="America/Los_Angeles">pacific time</span></span>
     <a class="ul-link" href="contact.html">contact</a>
     <span class="site-footer__end">&copy; <span data-year>2026</span> &middot; work shown is selected founder experience</span>
@@ -93,7 +104,6 @@
   <script src="assets/js/work-data.js"></script>
   <script src="assets/js/site.js"></script>
   <script src="assets/js/work.js"></script>
-  <script src="assets/js/blot.js"></script>
   <script src="assets/js/home.js"></script>
 </body>
 </html>
