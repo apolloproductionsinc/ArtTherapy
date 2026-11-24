@@ -93,6 +93,33 @@
     return img;
   }
 
+  /* motion preview: a short silent loop (item.loop) over the still.
+     Hover / keyboard focus plays it on pointer devices; on touch screens
+     it plays while the tile is mostly on screen. Off with reduced motion. */
+  var touchIO = null;
+  function addLoop(li, facade, item) {
+    if (AT.reduceMotion && AT.reduceMotion.matches) return;
+    var v = el("video", { class: "work-item__loop", muted: "", loop: "", playsinline: "", preload: "none", "aria-hidden": "true" });
+    v.muted = true;
+    v.src = item.loop;
+    if (item.thumb) v.poster = item.thumb;
+    facade.appendChild(v);
+    var start = function () { var p = v.play(); li.classList.add("is-looping"); if (p && p.catch) p.catch(function () {}); };
+    var stop = function () { v.pause(); li.classList.remove("is-looping"); };
+    if (window.matchMedia("(hover: hover)").matches) {
+      li.addEventListener("mouseenter", start);
+      li.addEventListener("mouseleave", stop);
+      li.addEventListener("focusin", start);
+      li.addEventListener("focusout", stop);
+    } else if ("IntersectionObserver" in window) {
+      if (!touchIO) touchIO = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { var f = e.target._loop; if (f) (e.intersectionRatio > 0.6 ? f.start : f.stop)(); });
+      }, { threshold: [0, 0.6, 1] });
+      li._loop = { start: start, stop: stop };
+      touchIO.observe(li);
+    }
+  }
+
   function buildItem(item, eager) {
     var li = el("li", {
       class: "work-item reveal", id: "work-" + item.id,
@@ -121,6 +148,7 @@
       facade = poster(item, false);
     }
     media.appendChild(facade);
+    if (item.loop && facade.classList.contains("work-item__play")) addLoop(li, facade, item);
 
     var meta = el("p", { class: "work-item__meta" }, [
       el("span", { class: "work-item__tags", text: item.categories.map(catLabel).join(" · ") }),

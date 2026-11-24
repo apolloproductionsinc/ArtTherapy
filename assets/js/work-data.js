@@ -20,6 +20,10 @@
  *   embed       { type: "youtube"|"vimeo"|"vimeo-showcase"|"tiktok", … }
  *               omit for link-only or placeholder entries
  *   thumb       poster image URL (null → mineral placeholder)
+ *   loop        optional short silent video loop, e.g. "assets/video/<id>.mp4"
+ *               (6–10 s, no audio, ~1280 px wide). Plays in the landing flip
+ *               window and as a hover preview on the work page; the still
+ *               is used until it loads and wherever motion is reduced.
  *   placeholder true when the asset still has to be supplied
  *   tempStill   true when the poster is a temporary frame grab
  *   note        internal pre-launch note (never rendered)

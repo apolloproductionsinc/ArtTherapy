@@ -69,20 +69,38 @@
       <p class="statement-sub reveal">We help brands stay current with modern tools and strategies, streamline creative workflows, and strengthen their teams. We know how to integrate brands into youth culture.</p>
     </section>
 
-    <!-- CAPABILITIES: five columns on a full-bleed black panel -->
+    <!-- CAPABILITIES: a dial that turns to bring each capability to the top -->
     <section class="caps" aria-labelledby="cap-label">
-      <div class="caps__inner">
-        <div class="caps__head">
+      <div class="caps__inner wheel" data-wheel>
+        <div class="wheel__copy">
           <h2 class="label caps__label" id="cap-label">capabilities</h2>
           <p class="caps__intro">Creativity is the purpose. Production and practical execution are how it gets made.</p>
+          <div class="wheel__readout">
+            <p class="wheel__desc" aria-live="off">Strategic positioning and creative concepting.</p>
+            <div class="wheel__controls">
+              <button class="wheel__btn" type="button" data-wheel-prev aria-label="Previous capability">&larr;</button>
+              <button class="wheel__btn" type="button" data-wheel-toggle aria-pressed="false">pause</button>
+              <button class="wheel__btn" type="button" data-wheel-next aria-label="Next capability">&rarr;</button>
+            </div>
+          </div>
         </div>
-        <ol class="caps__list">
-          <li class="cap reveal"><span class="cap__num">01</span><h3 class="cap__name">Ideate</h3><p class="cap__desc">Strategic positioning and creative concepting.</p></li>
-          <li class="cap reveal"><span class="cap__num">02</span><h3 class="cap__name">Make</h3><p class="cap__desc">Full-service production execution.</p></li>
-          <li class="cap reveal"><span class="cap__num">03</span><h3 class="cap__name">Live</h3><p class="cap__desc">Live events and livestreaming.</p></li>
-          <li class="cap reveal"><span class="cap__num">04</span><h3 class="cap__name">Experience</h3><p class="cap__desc">Live event and activation management.</p></li>
-          <li class="cap reveal"><span class="cap__num">05</span><h3 class="cap__name">Guide</h3><p class="cap__desc">We help you establish internal production workflows and embrace modern technology to make your content creation seamless.</p></li>
-        </ol>
+        <div class="wheel__dial">
+          <div class="wheel__ring">
+            <span class="wheel__ticks" aria-hidden="true"></span>
+            <ul class="wheel__list" aria-label="Capabilities">
+              <li class="wheel__slot" style="--a: 0deg"><button class="wheel__item" type="button" aria-pressed="true" data-desc="Strategic positioning and creative concepting.">Ideate</button></li>
+              <li class="wheel__slot" style="--a: 72deg"><button class="wheel__item" type="button" aria-pressed="false" data-desc="Full-service production execution.">Make</button></li>
+              <li class="wheel__slot" style="--a: 144deg"><button class="wheel__item" type="button" aria-pressed="false" data-desc="Live events and livestreaming.">Live</button></li>
+              <li class="wheel__slot" style="--a: 216deg"><button class="wheel__item" type="button" aria-pressed="false" data-desc="Live event and activation management.">Experience</button></li>
+              <li class="wheel__slot" style="--a: 288deg"><button class="wheel__item" type="button" aria-pressed="false" data-desc="We help you establish internal production workflows and embrace modern technology to make your content creation seamless.">Guide</button></li>
+            </ul>
+          </div>
+          <span class="wheel__pointer" aria-hidden="true"></span>
+          <div class="wheel__center" aria-hidden="true">
+            <span class="wheel__num">01 / 05</span>
+            <span class="wheel__name">Ideate</span>
+          </div>
+        </div>
       </div>
     </section>
   </main>

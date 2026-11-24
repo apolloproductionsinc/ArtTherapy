@@ -4,7 +4,7 @@ A four-page static site for **Art Supply** (formerly art / therapy; the domain a
 
 | Page | What's on it |
 |---|---|
-| `index.html` (landing) | The top of the first screen is a full-bleed window that flips through selected work (a 3D flip every 3.6 s, with prev / pause / next; it pauses on hover, on focus and off screen, and doesn't autoplay with reduced motion). Below it are the large **ART SUPPLY** wordmark and a down arrow. Then come the positioning statement and the capabilities: five hairline columns (number, name, line of copy) on a full-bleed black panel with film grain and a red hover. |
+| `index.html` (landing) | The top of the first screen is a full-bleed window that flips through selected work (a 3D flip every 3.6 s, with prev / pause / next; it pauses on hover, on focus and off screen, and doesn't autoplay with reduced motion). Below it are the large **ART SUPPLY** wordmark and a down arrow. Then come the positioning statement and the capabilities wheel: the five capabilities sit around a dial on a full-bleed black panel with film grain. It turns on its own to bring each one under the red pointer and shows its line of copy; click a name or use the arrows to turn it, and it pauses on hover. |
 | `work.html` | All work from the landing-page list, with a sub-navigation: **all / commercial / documentary / live / experiential / music**. Each filter shows only those videos and can be deep-linked, e.g. `work.html#music`. Every project uses the same 16:9 tile size: three across on desktop, two on tablet, one on phone. Videos play inline. |
 | `about.html` | Company statement and introduction, a founder quote, "what we bring", the five capabilities, and the three founder bios. |
 | `contact.html` | Email, studio location with a live Los Angeles local-time clock, and social links. These come from the first design, simplified. |
@@ -36,6 +36,24 @@ assets/img/temp/         TEMPORARY frame grabs (replace before launch)
 - **Logo:** "Art Supply" set in Archivo (Google Fonts) at 112% width, bold, uppercase (`.logo` / `--font-logo` in the CSS). It's a type-only wordmark; commission or license a final logo before launch if needed.
 - **Brand red:** `--red: #ff4a1c` colours every "/" on the site, carried over from the first design. `AT.redSlashes()` in `site.js` wraps any slash in page text automatically.
 - **Reduced motion:** with `prefers-reduced-motion` turned on, the flip window swaps without animation and doesn't advance on its own.
+
+## Adding motion previews (video loops)
+
+Stills come from YouTube and Vimeo. Moving previews need short video files hosted with the site, because platform players are too heavy and unreliable to autoplay as previews, and footage shouldn't be ripped from those platforms.
+
+For each project:
+
+1. Export or cut a 6–10 second clip with no audio from the master file.
+2. Compress it for the web. With [ffmpeg](https://ffmpeg.org):
+
+   ```bash
+   ffmpeg -ss 00:00:12 -t 8 -i master.mov -an -vf "scale=1280:-2,fps=24" -c:v libx264 -profile:v high -crf 26 -preset slow -pix_fmt yuv420p -movflags +faststart assets/video/<id>.mp4
+   ```
+
+   Aim for 1–3 MB per clip.
+3. Add `loop: "assets/video/<id>.mp4"` to that project in `assets/js/work-data.js`.
+
+The clip then plays silently in the landing flip window while that project is up, and as a hover preview on the Work page (or while the tile is on screen, on phones). The still shows until the clip loads, and for anyone with reduced motion turned on.
 
 ## Work content
 
