@@ -41,12 +41,15 @@
       <p class="page-head__note">Selected work from the founders&rsquo; collective experience. Credits and roles to be confirmed.</p>
     </div>
 
-    <nav class="subnav" aria-label="Filter work by category">
-      <div class="subnav__inner" id="work-filters"><!-- built by work.js --></div>
-    </nav>
     <p class="visually-hidden" id="work-status" aria-live="polite"></p>
 
-    <ol class="work-list" data-work-list="all" data-filter-bar="work-filters"></ol>
+    <div class="work-layout">
+      <ol class="work-list" data-work-list="all" data-filter-bar="work-filters" data-index="work-index" aria-label="Work"></ol>
+      <aside class="work-index" aria-label="Project index">
+        <nav class="work-index__filters" id="work-filters" aria-label="Filter work by category"><!-- built by work.js --></nav>
+        <ol class="work-index__list" id="work-index"><!-- built by work.js --></ol>
+      </aside>
+    </div>
 
     <noscript>
       <p class="noscript-note">Turn on JavaScript to browse, filter and play the work.</p>

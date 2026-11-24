@@ -5,7 +5,7 @@ A four-page static site for **Art Supply** (formerly art / therapy; the domain a
 | Page | What's on it |
 |---|---|
 | `index.html` (landing) | The first screen is the **ART SUPPLY** wordmark, scaled to the full width, over the work. The work runs full bleed and fills the rest of the screen, flipping through selected projects (a 3D flip every 3.6 s; caption, prev / pause / next laid over the bottom; it pauses on hover, on focus and off screen, and doesn't autoplay with reduced motion). Below come the positioning statement and the capabilities wheel on white. It's a quiet hairline dial with a small marker for each capability, and it turns to bring each one under the pointer, where its marker turns coral. The whole block is set in Instrument Serif (italic for the display lines, roman for the copy). |
-| `work.html` | All work from the landing-page list, with a sub-navigation: **all / commercial / documentary / live / experiential / music**. Each filter shows only those videos and can be deep-linked, e.g. `work.html#music`. Every project uses the same 16:9 tile size: three across on desktop, two on tablet, one on phone. Videos play inline. |
+| `work.html` | All the work as uniform tiles, with an **index list down the right side** (sticky; on phones it sits above the tiles). The category filter (**all / commercial / documentary / live / experiential / music**) sits at the top of the list and narrows both the list and the tiles; it can be deep-linked, e.g. `work.html#music`. Clicking a list entry or a tile **opens the project full bleed across the whole screen**: the still (or its loop), a play button that loads the video full screen, ← / → (or the arrow keys) through the filtered projects, and Esc or × to close. |
 | `about.html` | Company statement and introduction, a founder quote, "what we bring", the five capabilities, and the three founder bios. |
 | `contact.html` | Email, studio location with a live Los Angeles local-time clock, and social links. These come from the first design, simplified. |
 
@@ -25,7 +25,7 @@ Then open http://localhost:8000. You need a server, not `file://`, because YouTu
 index.html, work.html, about.html, contact.html
 assets/css/styles.css    all styles (tokens at the top under :root)
 assets/js/work-data.js   portfolio entries and filter categories (edit this to add, remove or reorder work)
-assets/js/work.js        work list, filters, video facades
+assets/js/work.js        work tiles, index list, filters, full-bleed viewer
 assets/js/home.js        landing flip window and capabilities list
 assets/js/site.js        shared: header, reveals, studio clock, footer year
 assets/img/temp/         TEMPORARY frame grabs (replace before launch)
