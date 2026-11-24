@@ -6,8 +6,8 @@
  *    Auto-advances; pauses on hover, keyboard focus, off screen or when the
  *    tab is hidden; prev / pause / next controls. With reduced motion it
  *    swaps without the 3D flip, shows stills and does not auto-advance.
- * 2. Capabilities wheel: five soft petals carry the capabilities around a
- *    dial that turns to bring the chosen one to the top (coral dot). Turns on its own,
+ * 2. Capabilities wheel: the five capabilities sit around a hairline dial
+ *    that turns to bring the chosen one to the top (its marker turns coral). Turns on its own,
  *    pauses on hover / focus / off screen; click a name or use the arrows.
  */
 (function () {
@@ -132,7 +132,7 @@
     var n = items.length, step = 360 / n;
     var numEl = root.querySelector(".wheel__num");
     var nameEl = root.querySelector(".wheel__name");
-    var petals = Array.prototype.slice.call(root.querySelectorAll(".wheel__petal"));
+    var marks = Array.prototype.slice.call(root.querySelectorAll(".wheel__mark"));
     var descEl = root.querySelector(".wheel__desc");
     var k = 0, rot = 0;
 
@@ -147,7 +147,7 @@
       k = idx;
       ring.style.setProperty("--rot", rot + "deg");
       items.forEach(function (b, j) { b.setAttribute("aria-pressed", j === k ? "true" : "false"); });
-      petals.forEach(function (pt, j) { pt.classList.toggle("is-active", j === k); });
+      marks.forEach(function (m, j) { m.classList.toggle("is-active", j === k); });
       numEl.textContent = pad(k + 1) + " / " + pad(n);
       nameEl.textContent = items[k].textContent;
       descEl.setAttribute("aria-live", fromUser ? "polite" : "off");
